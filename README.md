@@ -15,6 +15,24 @@ And I think it is a bit more flexible than log4net, and easier to configure.
 
 So now that I'm off work, this is the first project I wanted to work on.
 
+# What does it do?
+This is a logging library, so obviously it logs.
+The Core project contains the base implementation on how to create the logger, and how the logger translates exceptions into a model that can be consumed
+There are several levels (pretty typical) of information
+```c#
+    public enum LogType
+    {
+        Trace,
+        Info,
+        Warning,
+        Error,
+        Custom,
+        Custom1,
+        Custom2,
+        Custom3
+    }
+```
+
 # How do I use it?
 Really, there are four steps
 1. Configure your DB (or not, if you want to log it somewhere else)
@@ -48,4 +66,22 @@ var logger = loggerBuilder.WithWriter(
 ```c#
 services.AddSingleton<ILogWriter>(logger);
 ```
-# What's in this Repo?
+5. Start Logging
+Logging is simple, for ```Warn``` and ```Error``` type of logs, use the LogWarn or LogError Api
+```c#
+        
+        // Warn
+        await exceptionLogWriter.LogWarnAsync(new Exception("My bad"));
+       
+        // Error 
+        await exceptionLogWriter.LogErrorAsync(new Exception("My bad"));
+ ```
+For all custom events/logs, use the LogAsync method
+```c#
+        await LogAsync<T>(LogType logType, string message, T detail);
+```
+# What's in this Repo
+In this Repo, there is one Abstraction (core) project, and one Implementation Project.
+- Icebear.Exceptions.Core - Base implementation encompasses the base implementation for each type of logger
+  - The core project also includes an InMemory implementation as a sample
+- Icebear.Exceptions.Db.Ef - Implementation that uses a DB as storage mechanism

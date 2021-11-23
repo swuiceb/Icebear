@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>IceBear.Exceptions.Core</RootNamespace>
         <AssemblyName>IceBear.Exceptions.Core</AssemblyName>
         <LangVersion>10</LangVersion>
@@ -15,6 +14,7 @@
         <RepositoryUrl>https://github.com/swuiceb/Icebear</RepositoryUrl>
         <PackageTags>Exception Logging Common</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <TargetFrameworks>net5.0;net6.0;netstandard1.7;netstandard2.0;netstandard2.1</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
