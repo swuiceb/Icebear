@@ -1,24 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Icebear.Exceptions.Core.ExceptionProcessors;
+using Icebear.Exceptions.Core.LogReaders;
 using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.LogWriters.Providers;
 using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.Models.Entity;
+using Icebear.Exceptions.Db.Ef;
 using Icebear.Exceptions.Db.Ef.LogWriters;
+using Icebear.Exceptions.Db.Ef.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-
 
 public class Startup
 {
@@ -42,16 +35,20 @@ public class Startup
         var dbOptions = new DbContextOptionsBuilder()
             .UseSqlServer(
                 Configuration.GetConnectionString("ErrorDatabase"))
+            .EnableDetailedErrors()
+            .EnableSensitiveDataLogging()
             .Options;
 
         var loggerBuilder = new LoggerBuilder()
             .WithConsoleLevel(LogType.Trace)
             .WithExceptionTextProvider(ExceptionTextProviders.Default);
 
-        var logger = loggerBuilder.WithWriter(loggerBuilder.BuildInDb(LogContextProvider))
+        var logger = loggerBuilder.WithWriter(loggerBuilder.BuildInDb(
+                new Ef5Repository(LogContextProvider)))
             .Build(LogType.Warning);
         
-        services.AddSingleton<ILogWriter>(logger);
+        services.AddSingleton<ILogWriter>(logger.Writer);
+        services.AddSingleton<ILogReader>(logger.Reader);
 
         ErrorDbContext LogContextProvider()
         {
@@ -67,7 +64,7 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseExceptionHandler("/error");
+        app.UseExceptionHandler("/Error");
 
         app.UseStatusCodePages();
         app.UseRouting();

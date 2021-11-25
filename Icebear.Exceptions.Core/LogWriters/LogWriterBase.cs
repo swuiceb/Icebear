@@ -10,10 +10,10 @@ namespace Icebear.Exceptions.Core.LogWriters
     {
         protected Func<Exception, string> SourceProvider { get; set; }
         protected Func<Exception, string> CodeProvider { get; set; }
-        protected Func<Exception, IErrorDescription> ExceptionTextProvider { get; set; }
+        protected Func<Exception, ILogDescription> ExceptionTextProvider { get; set; }
         
         protected LogWriterBase(
-            [NotNull]Func<Exception, IErrorDescription> exceptionTextProvider = null,
+            Func<Exception, ILogDescription> exceptionTextProvider = null,
             Func<Exception, string> sourceProvider = null,
             Func<Exception, string> codeProvider = null)
         {

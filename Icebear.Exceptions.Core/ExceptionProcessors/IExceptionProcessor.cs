@@ -12,7 +12,7 @@ namespace Icebear.Exceptions.Core.ExceptionProcessors
         void RegisterPreHandlers(IEnumerable<IExceptionPreProcessor> transformers);
         void RegisterPreHandlers(params IExceptionPreProcessor[] transformers);
 
-        Task<IError> HandleException(Exception ex);
+        Task<ILogEntry> HandleException(Exception ex);
         
         IExceptionProcessor WithLogger(ILogWriter logger);
     }

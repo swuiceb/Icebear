@@ -11,9 +11,9 @@ namespace Icebear.Exceptions.Core.LogWriters
         private readonly ILogWriter writer;
         private readonly string format;
 
-        internal ConsoleLogWriter([NotNull]ILogWriter writer,
+        internal ConsoleLogWriter(ILogWriter writer,
             string format,
-            Func<Exception, IErrorDescription> exceptionTextProvider,
+            Func<Exception, ILogDescription> exceptionTextProvider,
             Func<Exception, string> codeTextProvider,
             Func<Exception, string> sourceProvider) 
             : base(exceptionTextProvider, codeTextProvider, sourceProvider)
@@ -22,31 +22,30 @@ namespace Icebear.Exceptions.Core.LogWriters
             this.format = format;
         }
 
-        public async Task<IError> LogErrorAsync(Exception exception)
+        public async Task<ILogEntry> LogErrorAsync(Exception exception, params String[] tags)
         {
-            var threadId = Thread.CurrentThread.ManagedThreadId;
+            var threadId = 0; // Thread.CurrentThread.ManagedThreadId;
             // TODO: if a format is given, respect the format
             Console.WriteLine($"{DateTime.Now}:[{threadId}][ERROR]: {exception}");
             await writer.LogErrorAsync(exception);
             return null;
         }
 
-        public async Task<IError> LogWarnAsync(Exception exception)
+        public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
         {
-            var threadId = Thread.CurrentThread.ManagedThreadId;
+            var threadId = 0; //Thread.CurrentThread.ManagedThreadId;
             Console.WriteLine($"{DateTime.Now}:[{threadId}][WARN]: {exception}");
             await writer.LogWarnAsync(exception);
             return null;
         }
 
-        public async Task<string> LogAsync<T>(LogType logType, string message, T detail)
+        public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)
         {
-            var threadId = Thread.CurrentThread.ManagedThreadId;
+            var threadId = 0;//Thread.CurrentThread.ManagedThreadId;
             Console.WriteLine($"{DateTime.Now}:[{threadId}][{logType.ToString().ToUpper()}]: {message}");
             Console.WriteLine($"{DateTime.Now}:[{threadId}][{logType.ToString().ToUpper()}]: {detail}");
             
-            await writer.LogAsync(logType, message, detail);
-            return null;
+            return await writer.LogAsync(logType, message, detail);
         }
     }
 }

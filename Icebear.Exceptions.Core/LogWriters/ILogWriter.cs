@@ -6,10 +6,10 @@ namespace Icebear.Exceptions.Core.LogWriters
 {
     public interface ILogWriter
     {
-        Task<IError> LogErrorAsync(Exception exception);
+        Task<ILogEntry> LogErrorAsync(Exception exception, params String[] tags);
         
-        Task<IError> LogWarnAsync(Exception exception);
+        Task<ILogEntry> LogWarnAsync(Exception exception, params String[] tags);
         
-        Task<String> LogAsync<T>(LogType logType, string message, T detail);
+        Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail, params String[] tags);
     }
 }

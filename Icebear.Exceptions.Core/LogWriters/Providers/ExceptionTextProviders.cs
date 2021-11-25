@@ -1,5 +1,4 @@
 using System;
-using System.Net.Mime;
 using System.Text;
 using Icebear.Exceptions.Core.Models;
 
@@ -7,7 +6,7 @@ namespace Icebear.Exceptions.Core.LogWriters.Providers
 {
     public static class ExceptionTextProviders
     {
-        public static IErrorDescription Default(Exception ex)
+        public static ILogDescription Default(Exception ex)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(ex.Source);
@@ -24,26 +23,29 @@ namespace Icebear.Exceptions.Core.LogWriters.Providers
                 sb.AppendLine(baseEx.StackTrace);
             }
 
-            return new ErrorDescription
+            return new LogDescription
             {
                 Text = ex.Message,
                 Description = sb.ToString()
             };
         }
 
-        public static IErrorDescription Simple(Exception ex)
+        public static ILogDescription Simple(Exception ex)
         {
-            return new ErrorDescription
+            return new LogDescription
             {
                 Text = ex.Message,
                 Description = ex.StackTrace
             };
         }
 
-        private record ErrorDescription : IErrorDescription
+        private class LogDescription : ILogDescription
         {
-            public String Text { get; init; }
-            public String Description { get; init; }
+            public String Text { get; set; }
+            public String Description { get; set; }
+            
+            public string UserContext { get; }
+            public string SystemContext { get; }
         }
     }
 }

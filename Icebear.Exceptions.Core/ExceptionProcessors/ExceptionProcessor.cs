@@ -33,7 +33,7 @@ namespace Icebear.Exceptions.Core.ExceptionProcessors
             return this;
         }
 
-        public async Task<IError> HandleException(Exception ex)
+        public async Task<ILogEntry> HandleException(Exception ex)
         {
             var transformedException = ex;
             

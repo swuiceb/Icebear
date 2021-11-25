@@ -4,16 +4,23 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Icebear.Exceptions.Core.LogReaders;
 using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.LogWriters.Providers;
 using Icebear.Exceptions.Core.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Icebear.Exceptions.Core.LogWriters
 {
     public class LoggerBuilder
     {
-        internal Func<Exception, IErrorDescription> ExceptionTextProvider { get; private set; }
+        public class LoggerRepository
+        {
+            public ILogWriter Writer { get; internal set; }
+            public ILogReader Reader { get; internal set; }
+        }
+        
+        internal ILoggerRepository Repository { get; private set; }
+        internal Func<Exception, ILogDescription> ExceptionTextProvider { get; private set; }
         internal Func<Exception, string> SourceProvider { get; private set; }
         internal Func<Exception, string> CodeTextProvider { get; private set; }
 
@@ -23,7 +30,13 @@ namespace Icebear.Exceptions.Core.LogWriters
         // private string consoleFormat = "{--::TimeStamp::--}: [{--::Thread::--}][{--::Type::--}]: {--::Error::--}";
         private string consoleFormat = null;
 
-        public LoggerBuilder WithExceptionTextProvider(Func<Exception, IErrorDescription> exceptionTextProvider)
+        public LoggerBuilder WithRepository(ILoggerRepository repository)
+        {
+            this.Repository = repository;
+            return this;
+        }
+        
+        public LoggerBuilder WithExceptionTextProvider(Func<Exception, ILogDescription> exceptionTextProvider)
         {
             this.ExceptionTextProvider = exceptionTextProvider;
             return this;
@@ -75,7 +88,7 @@ namespace Icebear.Exceptions.Core.LogWriters
                 .Initialize(max);
         }
 
-        public ILogWriter Build(LogType logLevel)
+        public LoggerRepository Build(LogType logLevel)
         {
             if (logConsole)
             {
@@ -86,11 +99,21 @@ namespace Icebear.Exceptions.Core.LogWriters
                     CodeTextProvider, 
                     SourceProvider);
 
-                return new LoggerWrapper(consoleLevel, consoleWriter);
+                return
+                    new LoggerRepository()
+                    {
+                        Writer = new LoggerWrapper(consoleLevel, consoleWriter),
+                        Reader = writer as ILogReader
+                    };
             }
 
             Debug.Assert(writer != null, nameof(writer) + " != null");
-            return new LoggerWrapper(logLevel, writer);
+            return
+                new LoggerRepository()
+                {
+                    Writer = new LoggerWrapper(logLevel, writer),
+                    Reader = writer as ILogReader
+                };
         }
     }
 }

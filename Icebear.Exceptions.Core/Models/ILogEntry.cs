@@ -2,11 +2,13 @@ using System;
 
 namespace Icebear.Exceptions.Core.Models
 {
-    public interface IError : IErrorDescription
+    public interface ILogEntry : ILogDescription
     {
-        String Id { get; }
+        Guid Id { get; }
         String Code { get; }
-        
+
+        String Tags { get; }
+
         String Source { get; }
         
         DateTimeOffset OccurredDate { get; }
@@ -14,11 +16,14 @@ namespace Icebear.Exceptions.Core.Models
         LogType LogType { get; }
     }
 
-    public interface IErrorDescription
+    public interface ILogDescription
     {
         String Text { get; }
         
         String Description { get; }
+
+        String UserContext { get; }
         
+        String SystemContext { get; }
     }
 }

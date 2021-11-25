@@ -10,24 +10,24 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
     {
         public static ILogWriter BuildInDb(
             [NotNull]this LoggerBuilder builder,
-            [NotNull] Func<ErrorDbContext> contextProvider)
+            [NotNull]ILoggerRepository repository)
         {
                 return DbLogWriter.Create(
-                    contextProvider,
+                    repository,
                     builder.ExceptionTextProvider,
                     builder.SourceProvider,
                     builder.CodeTextProvider);
         }
-
+        
         public static ILogWriter BuildRollingDb(
             [NotNull]this LoggerBuilder builder,
-            [NotNull]Func<ErrorDbContext> contextProvider,
+            [NotNull]ILoggerRepository repository,
             int batchSize
             )
         {
             return new RollingDbLogWriter(
                 batchSize,
-                contextProvider,
+                repository,
                 builder.ExceptionTextProvider,
                 builder.SourceProvider,
                 builder.CodeTextProvider);

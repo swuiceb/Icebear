@@ -1,98 +1,66 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.ExceptionProcessors;
 using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.Models.Entity;
+using IceBear.Exceptions.Core.Models.Entity;
+using Icebear.Exceptions.Core.Repository;
 using Newtonsoft.Json;
 
 namespace Icebear.Exceptions.Core.LogWriters
 {
     internal class InMemoryLogWriter : LogWriterBase, ILogWriter
     {
-        private Queue<LogEntity> entries = new Queue<LogEntity>(100);
-        private int max = 100;
-        
-        private InMemoryLogWriter(){}
-        
-        public InMemoryLogWriter(
-            Func<Exception, IErrorDescription> exceptionTextProvider = null,
-            Func<Exception, string> sourceProvider = null,
-            Func<Exception, string> codeProvider = null) 
-            :base(exceptionTextProvider, sourceProvider, codeProvider)
+        private ILoggerRepository repository;
+
+        private InMemoryLogWriter()
         {
+        }
+
+        public InMemoryLogWriter(
+            Func<Exception, ILogDescription> exceptionTextProvider = null,
+            Func<Exception, string> sourceProvider = null,
+            Func<Exception, string> codeProvider = null)
+            : base(exceptionTextProvider, sourceProvider, codeProvider)
+        {
+            this.repository = new InMemoryRepository(100);
         }
 
         public InMemoryLogWriter Initialize(int max)
         {
-            this.max = max;
-            entries = new Queue<LogEntity>();
+            this.repository = new InMemoryRepository(max);
             return this;
         }
 
-        public async Task<IError> LogErrorAsync(Exception exception)
+        public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
-            var error = await Task.Run(() => 
-                Enqueue(LogType.Error, exception));
+            var entry = ToInMemoryException(LogType.Error, exception);
+            var error = await repository.SaveAsync(entry);
             return error;
         }
 
-        public async Task<IError> LogWarnAsync(Exception exception)
+        public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
         {
-            return await Task.Run(() => Enqueue(LogType.Warning, exception));
+            var entry = ToInMemoryException(LogType.Warning, exception);
+            return await repository.SaveAsync(entry);
         }
 
-        public async Task<string> LogAsync<T>(LogType logType, string message, T detail)
+        public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)
         {
-            await Task.Run(() => EnqueueLog(logType, message, detail));
-            return entries.Count.ToString();
+            var entry = ToInMemoryEntry(logType, detail, "", message);
+            return await repository.SaveAsync(entry);
         }
 
-        internal IEnumerable<LogEntity> GetAll()
+        internal IEnumerable<ILogEntry> GetAll()
         {
-            while(entries.Count > 0)
-            {
-                yield return entries.Dequeue();
-            } 
-        }
-
-        private LogEntity Enqueue(LogType type, Exception exception)
-        {
-            while (entries.Count >= max)
-            {
-                entries.Dequeue();
-            }
-
-            var target = ToInMemoryException(type, exception);
-            entries.Enqueue(target);
-            return target;
-        }
-
-        private LogEntity EnqueueLog<T>(LogType type, string message, T data)
-        {
-            while (entries.Count >= max)
-            {
-                entries.Dequeue();
-            }
-
-            if ((type == LogType.Error || type == LogType.Warning) &&
-                typeof(T).IsAssignableTo(typeof(Exception)))
-            {
-                return Enqueue(type, data as Exception);
-            }
-            else
-            {
-                var target = ToInMemoryEntry(type, data, text: message);
-                entries.Enqueue(target);
-                return target;
-            }
+            return repository.GetAll(null, new FilterParam()).Result.Items;
         }
         
-        private LogEntity ToInMemoryException(LogType logType, Exception exception)
+        private ILogEntry ToInMemoryException(LogType logType, Exception exception)
         {
-            return new LogEntity()
+            return new LogModel()
             {
+                Id = Guid.NewGuid(),
                 Code = CodeProvider?.Invoke(exception) ?? "",
                 LogType = logType,
                 Text = ExceptionTextProvider(exception).Text,
@@ -100,18 +68,31 @@ namespace Icebear.Exceptions.Core.LogWriters
             };
         }
 
-        private LogEntity ToInMemoryEntry<T>(LogType logType, T detail, string code = null, string text = null)
+        private LogModel ToInMemoryEntry<T>(LogType logType, T detail, string code = null, string text = null)
         {
-            return new LogEntity()
+            return new LogModel()
             {
                 LogType = logType,
                 Code = code,
                 Text = text,
                 Source = SourceProvider?.Invoke(null) ?? Environment.MachineName,
-                Description = 
-                    (typeof(T) != typeof(string) && !typeof(T).IsValueType) ? 
-                        JsonConvert.SerializeObject(detail) : detail.ToString()
+                Description =
+                    (typeof(T) != typeof(string) && !IsUnSerializableType(typeof(T)))
+                        ? JsonConvert.SerializeObject(detail)
+                        : detail.ToString()
             };
+        }
+
+        private bool IsUnSerializableType(Type t)
+        {
+            return t == typeof(int) ||
+                   t == typeof(long) ||
+                   t == typeof(String) ||
+                   t == typeof(DateTime) ||
+                   t == typeof(float) ||
+                   t == typeof(decimal) ||
+                   t == typeof(double) ||
+                   t == typeof(Single);
         }
     }
 }

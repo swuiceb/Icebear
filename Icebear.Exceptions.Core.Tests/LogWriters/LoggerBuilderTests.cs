@@ -14,7 +14,7 @@ namespace Icebear.Exceptions.Core.Tests.LogWriters
         public void Build_WithoutWriter()
         {
             var builder = new LoggerBuilder();
-            var logger = builder.Build(LogType.Info);
+            var logger = builder.Build(LogType.Info).Writer;
 
             Assert.IsInstanceOf<LoggerWrapper>(logger);
             var wrapper = (LoggerWrapper) logger;
@@ -35,8 +35,8 @@ namespace Icebear.Exceptions.Core.Tests.LogWriters
                 .WithWriter(inMemoryLogger)
                 .Build(LogType.Info);
 
-            Assert.IsInstanceOf<LoggerWrapper>(logger);
-            var wrapper = (LoggerWrapper) logger;
+            Assert.IsInstanceOf<LoggerWrapper>(logger.Writer);
+            var wrapper = (LoggerWrapper) logger.Writer;
             var fieldInfos = typeof(LoggerWrapper).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
 
             var targetFieldInfo = fieldInfos.First(f => f.FieldType == typeof(ILogWriter));
@@ -60,7 +60,7 @@ namespace Icebear.Exceptions.Core.Tests.LogWriters
             var logger = builder
                 .DisableConsole()
                 .WithWriter(inMemoryLogger)
-                .Build(LogType.Info);
+                .Build(LogType.Info).Writer;
 
             Assert.IsInstanceOf<LoggerWrapper>(logger);
             var wrapper = (LoggerWrapper) logger;

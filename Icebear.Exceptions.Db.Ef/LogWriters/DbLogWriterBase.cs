@@ -1,38 +1,41 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
+using Icebear.Exceptions.Core.LogReaders;
 using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.Models.Entity;
+using Icebear.Exceptions.Db.Ef.Models;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Icebear.Exceptions.Db.Ef.LogWriters
 {
-    public abstract class DbLogWriterBase : LogWriterBase
+    public abstract class DbLogWriterBase : 
+        LogWriterBase,
+        ILogReader
     {
-        protected readonly Func<ErrorDbContext> ContextProvider;
+        private readonly ILoggerRepository repository;
 
         protected DbLogWriterBase(
-            [NotNull]Func<ErrorDbContext> contextProvider,
-            Func<Exception, IErrorDescription>? exceptionTextProvider, 
+            [NotNull]ILoggerRepository repository,
+            Func<Exception, ILogDescription>? exceptionTextProvider, 
             Func<Exception, string>? sourceProvider, 
             Func<Exception, string>? codeProvider) : 
             base(exceptionTextProvider,
                 sourceProvider, 
                 codeProvider)
         {
-            this.ContextProvider = contextProvider;
+            this.repository = repository;
         }
 
-        protected async Task<string> StoreLog<T>(LogType logType, string message, T detail)
+        protected async Task<ILogEntry> StoreLog<T>(LogType logType, string message, T detail)
         {
-            await using var context = ContextProvider?.Invoke();
-            Debug.Assert(context != null, nameof(context) + " != null");
-            
             var entity = new LogEntity()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 LogType = logType,
                 Code =  "",
                 Source = Environment.MachineName,
@@ -41,16 +44,16 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
                     JsonConvert.SerializeObject(detail) : detail?.ToString()
             };
 
-            context.Errors.Add(entity);
-            await context.SaveChangesAsync();
+            await repository.SaveAsync(entity);
 
-            return entity.Id;
+            return entity;
         }
 
         protected LogEntity Log2Entity<T>(LogType logType, T detail, string? code = null, string? text = null)
         {
             return new LogEntity()
             {
+                Id = Guid.NewGuid(),
                 LogType = logType,
                 Code = code,
                 Text = text,
@@ -65,7 +68,7 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
 
             return new LogEntity()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 LogType = logType,
                 Code = CodeProvider?.Invoke(exception) ?? "",
                 Source = SourceProvider?.Invoke(exception) ?? Environment.MachineName,
@@ -74,17 +77,36 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
             };
         }
 
-        protected async Task<IError> StoreException(Exception exception, LogType type)
+        protected async Task<ILogEntry> Store(ILogEntry entry)
         {
-            await using var context = ContextProvider?.Invoke();
-            Debug.Assert(context != null, nameof(context) + " != null");
-            
+            return await repository.SaveAsync(entry);
+        }
+        protected async Task<ILogEntry> StoreException(Exception exception, LogType type)
+        {
             var entity = Exception2Log(exception, type);
-
-            context.Errors.Add(entity);
-            await context.SaveChangesAsync();
+            await repository.SaveAsync(entity);
 
             return entity;
-        } 
+        }
+
+        public async Task<ILogEntry> GetByIdAsync(Guid id)
+        {
+            return await repository.GetByIdAsync(id);
+        }
+
+        public virtual async Task<IEnumerable<ILogEntry>> GetLastNEntriesAsync(int n, LogType[] applicableTypes)
+        {
+            return await repository.GetLastNEntriesAsync(n, applicableTypes);
+        }
+
+        public virtual async Task<PageWrapper<ILogEntry>> GetAll(PageInfo pageInfo, FilterParam filters, SortByParam sortBy = null)
+        {
+            return await repository.GetAll(pageInfo, filters, sortBy);
+        }
+
+        public void Flush(DateTimeOffset after)
+        {
+            repository.Flush(after);
+        }
     }
 }

@@ -17,35 +17,35 @@ namespace Icebear.Exceptions.Core.LogWriters.Providers
             this.logger = logger;
         }
 
-        public async Task<IError> LogErrorAsync(Exception exception)
+        public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
             await LogException(LogType.Error, exception);
             return null;
         }
 
-        public async Task<IError> LogWarnAsync(Exception exception)
+        public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
         {
-            await LogException(LogType.Warning, exception);
+            await LogException(LogType.Warning, exception, tags);
             return null;
         }
 
-        private async Task LogException(LogType level, Exception exception)
+        private async Task LogException(LogType level, Exception exception,params String[] tags)
         {
             if (logLevel <= level)
             {
                 if (logLevel == LogType.Error) 
-                    await logger.LogErrorAsync(exception);
+                    await logger.LogErrorAsync(exception, tags);
                 
                 if (logLevel == LogType.Warning) 
-                    await logger.LogWarnAsync(exception);
+                    await logger.LogWarnAsync(exception, tags);
             }
         }
 
-        public async Task<string> LogAsync<T>(LogType logType, string message, T detail)
+        public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)
         {
             if (logLevel >= logType)
             {
-                await logger.LogAsync(logType, message, detail);
+                return await logger.LogAsync(logType, message, detail, tags);
             }
 
             return null;

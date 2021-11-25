@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.Models.Entity;
-using Microsoft.EntityFrameworkCore;
+using Icebear.Exceptions.Db.Ef.Models;
 
 namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
 {
@@ -18,17 +16,17 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
         
         internal RollingDbLogWriter(
             int batchSize,
-            Func<ErrorDbContext> contextProvider, 
-            Func<Exception, IErrorDescription>? exceptionTextProvider, 
+            [NotNull]ILoggerRepository repository, 
+            Func<Exception, ILogDescription>? exceptionTextProvider, 
             Func<Exception, string>? sourceProvider = null, 
             Func<Exception, string>? codeProvider = null) 
-            : base(contextProvider, exceptionTextProvider, sourceProvider, codeProvider)
+            : base(repository, exceptionTextProvider, sourceProvider, codeProvider)
         {
             this.batchSize = batchSize;
         }
         
         // TODO: Use DbLogWriterBase, write N Logs into the db
-        public async Task<IError> LogErrorAsync(Exception exception)
+        public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
             var error = Exception2Log(exception, LogType.Error);
             rollingLog.Add(error);
@@ -43,7 +41,7 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
             return error;
         }
 
-        public async Task<IError> LogWarnAsync(Exception exception)
+        public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
         {
             var error = Exception2Log(exception, LogType.Warning);
             rollingLog.Add(error);
@@ -58,7 +56,7 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
             return error;
         }
 
-        public async Task<string> LogAsync<T>(LogType logType, string message, T detail)
+        public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)
         {
             var log = Log2Entity(logType, detail, text: message);
             rollingLog.Add(log);
@@ -70,20 +68,28 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
                 await StoreInDb(immutableList);
             }
             
-            return "";
+            return log;
+        }
+
+        public override async Task<IEnumerable<ILogEntry>> GetLastNEntriesAsync(int n, LogType[] applicableTypes)
+        {
+            await StoreInDb(rollingLog.Flush());
+            return await base.GetLastNEntriesAsync(n, applicableTypes);
+        }
+
+        public override async Task<PageWrapper<ILogEntry>> GetAll(PageInfo pageInfo, FilterParam filters, SortByParam sortBy = null)
+        {
+            await StoreInDb(rollingLog.Flush());
+            return await base.GetAll(pageInfo, filters, sortBy);
         }
 
         private async Task StoreInDb(ImmutableArray<LogEntity> logs)
         {
-            await using var context = ContextProvider();
-            
+            if (logs.IsEmpty) return;
             foreach (var entity in logs)
             {
-                context.Errors.Add(entity);
+                await Store(entity);
             }
-
-            await context.SaveChangesAsync();
-            //await context.Database.CloseConnectionAsync();
         }
     }
 }
