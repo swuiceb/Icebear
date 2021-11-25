@@ -14,6 +14,8 @@ namespace Icebear.Exceptions.Db.Ef
         }
 
         public DbSet<LogEntity> Logs { get; set; }
+        
+        public DbSet<TagEntity> Tags { get; set; }
 
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

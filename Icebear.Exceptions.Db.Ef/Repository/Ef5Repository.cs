@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Icebear.Exceptions.Core.Models;
 using Icebear.Exceptions.Db.Ef.Models;
@@ -20,6 +21,12 @@ namespace Icebear.Exceptions.Db.Ef.Repository
             this.contextProvider = contextProvider;
         }
 
+        public async Task<IEnumerable<ITag>> GetTagsAsync()
+        {
+            await using var context = contextProvider();
+            return context.Tags.ToList();
+        }
+
         public async Task<IEnumerable<ILogEntry>> SaveAsync(IEnumerable<ILogEntry> logs)
         {
             await using var context = contextProvider();
@@ -33,11 +40,16 @@ namespace Icebear.Exceptions.Db.Ef.Repository
 
             await context.SaveChangesAsync();
             
+            await CloseConnection(context);
+            return logEntries;
+        }
+
+        private static async Task CloseConnection(ErrorDbContext context)
+        {
             if (context.Database.IsRelational())
             {
                 await context.Database.CloseConnectionAsync();
             }
-            return logEntries;
         }
 
         public async Task<ILogEntry> SaveAsync(ILogEntry log)
@@ -77,6 +89,21 @@ namespace Icebear.Exceptions.Db.Ef.Repository
                 queryable = queryable.Where(l => l.OccurredDate < filters.Since);
             }
 
+            if (filters.Tags != null && filters.Tags.Any())
+            {
+                var expression = PredicateBuilder.False<LogEntity>();
+                foreach (var tag in filters.Tags)
+                {
+                    Expression<Func<LogEntity, bool>> right = (l) => 
+                        l.Tags != null &&
+                        l.Tags.Contains(tag);
+                    
+                    expression = expression.Or(right);
+                }
+
+                queryable = queryable.Where(expression);
+            }
+
             if (filters.LogTypes != null)
             {
                 queryable = queryable.Where(l =>
@@ -95,19 +122,30 @@ namespace Icebear.Exceptions.Db.Ef.Repository
             );
         }
 
-        public void UpdateUserContext(Guid id, string userContext)
+        public async Task UpdateUserContextAsync(Guid id, string userContext)
         {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateSystemContext(Guid id, string systemContext)
-        {
-            throw new NotImplementedException();
+            await using var context = contextProvider();
+            var log = (await context.Logs.FindAsync(id));
+            log.UserContext = userContext;
+            await context.SaveChangesAsync();
+            await context.Database.CloseConnectionAsync();
         }
 
         public void Flush(DateTimeOffset after)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddTagsAsync(IEnumerable<ITag> pendingTags)
+        {
+            await using var context = contextProvider();
+            foreach (var tag in pendingTags)
+            {
+                await context.AddAsync((TagEntity) tag);
+                await context.SaveChangesAsync();
+            }
+
+            await CloseConnection(context);
         }
     }
 }

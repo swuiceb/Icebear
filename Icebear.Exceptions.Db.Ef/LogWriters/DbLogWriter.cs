@@ -48,17 +48,17 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
         
         public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
-            return await StoreException(exception, LogType.Error);
+            return await StoreException(exception, LogType.Error,tags);
         }
 
         public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
         {
-            return await StoreException(exception, LogType.Warning);
+            return await StoreException(exception, LogType.Warning, tags);
         }
 
         public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)
         {
-            return await StoreLog(logType, message, detail);
+            return await StoreLog(logType, message, detail, tags);
         }
     }
 }

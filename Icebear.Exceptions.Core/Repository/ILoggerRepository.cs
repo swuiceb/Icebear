@@ -6,6 +6,7 @@ using Icebear.Exceptions.Core.Models;
 
 public interface ILoggerRepository
 {
+    Task<IEnumerable<ITag>> GetTagsAsync();
     Task<IEnumerable<ILogEntry>> SaveAsync(IEnumerable<ILogEntry> logs);
     Task<ILogEntry> SaveAsync(ILogEntry log);
 
@@ -13,8 +14,8 @@ public interface ILoggerRepository
     Task<IEnumerable<ILogEntry>> GetLastNEntriesAsync(int n, LogType[] applicableTypes);
     Task<PageWrapper<ILogEntry>> GetAll(PageInfo pageInfo, FilterParam filters, SortByParam sortBy = null);
     
-    void UpdateUserContext(Guid id, String userContext);
-    void UpdateSystemContext(Guid id, String systemContext);
+    Task UpdateUserContextAsync(Guid id, String userContext);
     
     void Flush(DateTimeOffset after);
+    Task AddTagsAsync(IEnumerable<ITag> pendingTags);
 }

@@ -18,6 +18,7 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
         ILogReader
     {
         private readonly ILoggerRepository repository;
+        private IEnumerable<String> tags = new String[] { };
 
         protected DbLogWriterBase(
             [NotNull]ILoggerRepository repository,
@@ -29,14 +30,40 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
                 codeProvider)
         {
             this.repository = repository;
+            Init().Wait();
         }
 
-        protected async Task<ILogEntry> StoreLog<T>(LogType logType, string message, T detail)
+        public async Task Init()
+        {
+            tags = (await repository.GetTagsAsync())
+                .ToList()
+                .Select(t => t.Tag);
+        }
+
+        protected async Task<String> TagsToRaw(IEnumerable<String> tags)
+        {
+            var pendingTags = new List<TagEntity>();
+            foreach (var tag in tags)
+            {
+                if (!this.tags.Contains(tag))
+                {
+                    pendingTags.Add(new TagEntity(){Tag = tag});
+                }
+            }
+
+            // if tag does not exist, need to insert tag
+            await repository.AddTagsAsync(pendingTags);
+            this.tags = this.tags.Concat(pendingTags.Select(p => p.Tag)).ToList();
+            return String.Join(",", tags);
+        }
+
+        protected async Task<ILogEntry> StoreLog<T>(LogType logType, string message, T detail, string[] tags)
         {
             var entity = new LogEntity()
             {
                 Id = Guid.NewGuid(),
                 LogType = logType,
+                Tags = await TagsToRaw(tags),
                 Code =  "",
                 Source = Environment.MachineName,
                 Text = message,
@@ -65,7 +92,6 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
         }
         protected LogEntity Exception2Log(Exception exception, LogType logType)
         {
-
             return new LogEntity()
             {
                 Id = Guid.NewGuid(),
@@ -81,9 +107,10 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
         {
             return await repository.SaveAsync(entry);
         }
-        protected async Task<ILogEntry> StoreException(Exception exception, LogType type)
+        protected async Task<ILogEntry> StoreException(Exception exception, LogType type, params String[] tags)
         {
             var entity = Exception2Log(exception, type);
+            entity.Tags = await TagsToRaw(tags);
             await repository.SaveAsync(entity);
 
             return entity;

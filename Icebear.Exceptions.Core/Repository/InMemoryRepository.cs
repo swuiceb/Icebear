@@ -9,12 +9,19 @@ namespace Icebear.Exceptions.Core.Repository
     public class InMemoryRepository : ILoggerRepository
     {
         private readonly Queue<ILogEntry> entries;
+        private readonly IList<ITag> tags = new List<ITag>();
         private readonly int max;
 
         public InMemoryRepository(int max)
         {
             this.max = max;
             entries = new Queue<ILogEntry>(max);
+        }
+
+        public async Task<IEnumerable<ITag>> GetTagsAsync()
+        {
+            await Task.Delay(0);
+            return tags;
         }
 
         public async Task<IEnumerable<ILogEntry>> SaveAsync(IEnumerable<ILogEntry> logs)
@@ -62,12 +69,7 @@ namespace Icebear.Exceptions.Core.Repository
             }
         }
 
-        public void UpdateUserContext(Guid id, string userContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateSystemContext(Guid id, string systemContext)
+        public Task UpdateUserContextAsync(Guid id, string userContext)
         {
             throw new NotImplementedException();
         }
@@ -75,6 +77,16 @@ namespace Icebear.Exceptions.Core.Repository
         public void Flush(DateTimeOffset after)
         {
             entries.Clear();
+        }
+
+        public Task AddTagsAsync(IEnumerable<ITag> pendingTags)
+        {
+            foreach (var tag in pendingTags)
+            {
+                tags.Add(tag);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }
