@@ -13,15 +13,16 @@ namespace Icebear.Exceptions.Core.LogWriters
     {
         private ILoggerRepository repository;
 
-        private InMemoryLogWriter()
+        private InMemoryLogWriter() : base()
         {
         }
 
-        public InMemoryLogWriter(
-            Func<Exception, ILogDescription> exceptionTextProvider = null,
+        public InMemoryLogWriter(Func<Exception, ILogDescription> exceptionTextProvider = null,
             Func<Exception, string> sourceProvider = null,
-            Func<Exception, string> codeProvider = null)
-            : base(exceptionTextProvider, sourceProvider, codeProvider)
+            Func<Exception, string> codeProvider = null, 
+            Func<string> systemContextProvider = null)
+            : base(exceptionTextProvider, sourceProvider: sourceProvider, codeProvider: codeProvider,
+                systemContextProvider)
         {
             this.repository = new InMemoryRepository(100);
         }
@@ -63,6 +64,7 @@ namespace Icebear.Exceptions.Core.LogWriters
                 Id = Guid.NewGuid(),
                 Code = CodeProvider?.Invoke(exception) ?? "",
                 LogType = logType,
+                SystemContext = SystemContextProvider?.Invoke(),
                 Text = ExceptionTextProvider(exception).Text,
                 Description = ExceptionTextProvider(exception).Description,
             };

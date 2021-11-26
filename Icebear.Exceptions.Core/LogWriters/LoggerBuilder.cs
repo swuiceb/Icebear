@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Icebear.Exceptions.Core.LogReaders;
-using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.LogWriters.Providers;
 using Icebear.Exceptions.Core.Models;
 
@@ -23,6 +18,8 @@ namespace Icebear.Exceptions.Core.LogWriters
         internal Func<Exception, ILogDescription> ExceptionTextProvider { get; private set; }
         internal Func<Exception, string> SourceProvider { get; private set; }
         internal Func<Exception, string> CodeTextProvider { get; private set; }
+
+        internal Func<string> SystemContextProvider { get; private set; } = SystemContextProviders.Default();
 
         private ILogWriter writer;
         private bool logConsole = true;
@@ -49,6 +46,13 @@ namespace Icebear.Exceptions.Core.LogWriters
             return this;
         }
 
+        public LoggerBuilder WithSystemContextProvider(
+            Func<string> provider)
+        {
+            this.SystemContextProvider = provider;
+            return this;
+        }
+        
         public LoggerBuilder WithSourceTextProvider(Func<Exception, string> sourceProvider)
         {
             this.SourceProvider = sourceProvider;
@@ -84,7 +88,8 @@ namespace Icebear.Exceptions.Core.LogWriters
             return new InMemoryLogWriter(
                     ExceptionTextProvider,
                     SourceProvider,
-                    CodeTextProvider)
+                    CodeTextProvider,
+                    SystemContextProvider)
                 .Initialize(max);
         }
 

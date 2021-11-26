@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Icebear.Exceptions.Core.Models;
+using IceBear.Exceptions.Core.Models.Entity;
 
 namespace Icebear.Exceptions.Core.LogWriters.Providers
 {
@@ -19,26 +20,27 @@ namespace Icebear.Exceptions.Core.LogWriters.Providers
 
         public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
-            await LogException(LogType.Error, exception);
-            return null;
+            return await LogException(LogType.Error, exception);
         }
 
         public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
         {
-            await LogException(LogType.Warning, exception, tags);
-            return null;
+            return await LogException(LogType.Warning, exception, tags);
         }
 
-        private async Task LogException(LogType level, Exception exception,params String[] tags)
+        private async Task<ILogEntry> LogException(LogType level, Exception exception,params String[] tags)
         {
             if (logLevel <= level)
             {
-                if (logLevel == LogType.Error) 
-                    await logger.LogErrorAsync(exception, tags);
+                if (level == LogType.Error) 
+                    return await logger.LogErrorAsync(exception, tags);
                 
-                if (logLevel == LogType.Warning) 
-                    await logger.LogWarnAsync(exception, tags);
+                if (level == LogType.Warning) 
+                    return await logger.LogWarnAsync(exception, tags);
             }
+
+            // TODO: Populate LogEntry with proper data
+            return new LogModel();
         }
 
         public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)

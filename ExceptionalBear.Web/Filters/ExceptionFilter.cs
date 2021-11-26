@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ExceptionalBear.Web.Filters
@@ -15,7 +16,7 @@ namespace ExceptionalBear.Web.Filters
         {
             if (context.Exception != null)
             {
-                
+                context.Result = new BadRequestResult();
             }
         }
     }

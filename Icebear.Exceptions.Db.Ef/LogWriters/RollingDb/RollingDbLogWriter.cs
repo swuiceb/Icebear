@@ -19,8 +19,9 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
             [NotNull]ILoggerRepository repository, 
             Func<Exception, ILogDescription>? exceptionTextProvider, 
             Func<Exception, string>? sourceProvider = null, 
-            Func<Exception, string>? codeProvider = null) 
-            : base(repository, exceptionTextProvider, sourceProvider, codeProvider)
+            Func<Exception, string>? codeProvider = null,
+            Func<string>? systemContextProvider = null) 
+            : base(repository, exceptionTextProvider, sourceProvider, codeProvider, systemContextProvider)
         {
             this.batchSize = batchSize;
         }

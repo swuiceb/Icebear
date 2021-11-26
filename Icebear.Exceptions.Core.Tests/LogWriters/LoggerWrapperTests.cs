@@ -23,7 +23,7 @@ namespace Icebear.Exceptions.Core.Tests.LogWriters
             
             await logWriter.DidNotReceiveWithAnyArgs().LogWarnAsync(Arg.Any<Exception>());
             await logWriter.DidNotReceiveWithAnyArgs().LogErrorAsync(Arg.Any<Exception>());
-            //await logWriter.DidNotReceiveWithAnyArgs() .LogAsync<dynamic>(Arg.Any<LogType>(), Arg.Any<string>(), Arg.Any<dynamic>());
+            await logWriter.DidNotReceiveWithAnyArgs() .LogAsync<dynamic>(Arg.Any<LogType>(), Arg.Any<string>(), Arg.Any<dynamic>());
 
             await loggerWrapper.LogErrorAsync(ExceptionUtilities.GetNestedException("inner", "outer"));
             await logWriter.Received(1).LogErrorAsync(Arg.Any<Exception>());

@@ -19,6 +19,6 @@ namespace IceBear.Exceptions.Core.Models.Entity
 
         public string Description { get; internal set; }
         public string UserContext { get; }
-        public string SystemContext { get; }
+        public string SystemContext { get; internal set; }
     }
 }

@@ -1,0 +1,24 @@
+@page
+@model ExceptionalBear.Web.Views.Test.ErrorDetail
+
+@{
+    Layout = null;
+    var title = ViewBag.Title ?? "Icebear Exception";
+    var error = ViewBag.Error;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@title</title>
+</head>
+<body>
+<section>
+    @title
+</section>
+<section>
+    There was an error, please contact customer service with @error.Id
+</section>
+</body>
+</html>

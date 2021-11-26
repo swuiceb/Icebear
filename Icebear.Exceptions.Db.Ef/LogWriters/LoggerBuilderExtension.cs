@@ -16,7 +16,8 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
                     repository,
                     builder.ExceptionTextProvider,
                     builder.SourceProvider,
-                    builder.CodeTextProvider);
+                    builder.CodeTextProvider,
+                    builder.SystemContextProvider);
         }
         
         public static ILogWriter BuildRollingDb(
@@ -30,7 +31,8 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
                 repository,
                 builder.ExceptionTextProvider,
                 builder.SourceProvider,
-                builder.CodeTextProvider);
+                builder.CodeTextProvider,
+                builder.SystemContextProvider);
         }
     }
 }

@@ -14,13 +14,15 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
             [NotNull]ILoggerRepository repository,
             Func<Exception, ILogDescription>? exceptionTextProvider = null,
             Func<Exception, String>? sourceProvider = null,
-            Func<Exception, String>? codeProvider = null)
+            Func<Exception, String>? codeProvider = null,
+            Func<String>? systemContextProvider = null)
         {
             return new DbLogWriter(
                     repository, 
                     exceptionTextProvider,
                     sourceProvider, 
-                    codeProvider)
+                    codeProvider,
+                    systemContextProvider)
                 .Verify();
         }
         
@@ -28,8 +30,9 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
             [NotNull]ILoggerRepository repository,
             Func<Exception, ILogDescription>? exceptionTextProvider = null,
             Func<Exception, string>? sourceProvider = null,
-            Func<Exception, string>? codeProvider = null) 
-            :base(repository, exceptionTextProvider, sourceProvider, codeProvider)
+            Func<Exception, string>? codeProvider = null,
+            Func<string>? systemContextProvider = null) 
+            :base(repository, exceptionTextProvider, sourceProvider, codeProvider, systemContextProvider)
         {
         }
 

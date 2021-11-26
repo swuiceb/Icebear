@@ -24,10 +24,13 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
             [NotNull]ILoggerRepository repository,
             Func<Exception, ILogDescription>? exceptionTextProvider, 
             Func<Exception, string>? sourceProvider, 
-            Func<Exception, string>? codeProvider) : 
+            Func<Exception, string>? codeProvider,
+            Func<String>? systemContextProvider
+            ) : 
             base(exceptionTextProvider,
                 sourceProvider, 
-                codeProvider)
+                codeProvider,
+                systemContextProvider)
         {
             this.repository = repository;
             Init().Wait();
@@ -82,8 +85,10 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
             {
                 Id = Guid.NewGuid(),
                 LogType = logType,
+                Tags = TagsToRaw(tags).Result,
                 Code = code,
                 Text = text,
+                SystemContext = SystemContextProvider?.Invoke(),
                 Source = SourceProvider?.Invoke(null) ?? Environment.MachineName,
                 Description = 
                     (typeof(T) != typeof(string) && !typeof(T).IsValueType) ? 

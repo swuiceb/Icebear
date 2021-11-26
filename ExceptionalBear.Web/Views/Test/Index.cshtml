@@ -1,0 +1,62 @@
+@page
+@model ExceptionalBear.Web.Views.Test.Index
+
+
+@{
+    Layout = null;
+    var lastN = ViewBag.LastN;
+    var specific = ViewBag.Specific;
+    var error = ViewBag.Error;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Icebear Logs</title>
+</head>
+<body>
+<main>
+    <section>
+        <form name="search" method="get">
+            <label for="search-input">Search For Error</label>
+            <input ID="search-input" name="searchInput" type="text"/>
+            <input ID="submit" type="submit"/>
+        </form>
+        @if (error != null)
+        {
+            <label id="notfound">@error</label>
+        }
+    </section>
+    <section>
+        @if (specific != null)
+        {
+            @specific
+        }
+    </section>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Message</th>
+            <th>Description</th>
+            <th>UserContext</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var log in lastN)
+        {
+            <tr>
+                <td>@log.Id</td>
+                <td>@log.LogType.ToString()</td>
+                <td>@log.Text</td>
+                <td>@log.Description</td>
+                <td>@log.UserContext</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

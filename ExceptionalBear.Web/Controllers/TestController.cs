@@ -1,68 +1,108 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using ExceptionalBear.Web.Views;
 using Icebear.Exceptions.Core.LogReaders;
 using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExceptionalBear.Controllers
+public class TestController : Controller
 {
-    public class TestController : Controller
+    private readonly ILogWriter exceptionLogWriter;
+    private readonly ILogReader logReader;
+
+    public TestController(
+        ILogWriter exceptionLogWriter,
+        ILogReader logReader)
     {
-        private readonly ILogWriter exceptionLogWriter;
-        private readonly ILogReader logReader;
+        this.exceptionLogWriter = exceptionLogWriter;
+        this.logReader = logReader;
+    }
 
-        public TestController(
-            ILogWriter exceptionLogWriter,
-            ILogReader logReader)
+    [HttpGet("exception")]
+    public async Task Exception()
+    {
+        await exceptionLogWriter.LogErrorAsync(new Exception("My bad"));
+        throw new Exception("My Bad");
+    }
+
+    [HttpGet("warning")]
+    public async Task Warning()
+    {
+        await exceptionLogWriter.LogWarnAsync(new Exception("My bad"));
+    }
+
+    [HttpGet("log/{logtype}")]
+    public async Task Log(LogType logType)
+    {
+        await exceptionLogWriter.LogAsync(logType, "custom", new
         {
-            this.exceptionLogWriter = exceptionLogWriter;
-            this.logReader = logReader;
-        }
-        
-        [HttpGet("exception")]
-        public async Task Exception()
+            testString = "TestString",
+            testInt = 3
+        });
+    }
+
+    [HttpGet("logs/lastN/{n}")]
+    public async Task<IEnumerable<ILogEntry>> Filter(int n)
+    {
+        return await logReader.GetLastNEntriesAsync(n, new[]
         {
-            await exceptionLogWriter.LogErrorAsync(new Exception("My bad"));
-            throw new Exception("My Bad");
-        } 
-        
-        [HttpGet("warning")]
-        public async Task Warning()
+            LogType.Info,
+            LogType.Custom,
+            LogType.Error
+        });
+    }
+
+    [HttpPost("logs/all")]
+    public async Task<IActionResult> Find(String searchInput)
+    {
+        if (Guid.TryParse(searchInput, out Guid id))
         {
-            await exceptionLogWriter.LogWarnAsync(new Exception("My bad"));
-        } 
-        
-        [HttpGet("log/{logtype}")]
-        public async Task Log(LogType logType)
-        {
-            await exceptionLogWriter.LogAsync(logType, "custom", new
+            var logEntry = await logReader.GetByIdAsync(id);
+            if (logEntry != null)
             {
-                testString = "TestString",
-                testInt = 3
-            });
+                ViewBag.Specific = logEntry;
+                return View("Index");
+            }
+
+            ViewBag.Error = "Entry Code does not exist";
         }
 
-        [HttpGet("logs/lastN/{n}")]
-        public async Task<IEnumerable<ILogEntry>> Filter(int n)
+        return View("Index");
+    }
+
+    [HttpGet("logs/all")]
+    public async Task<IActionResult> GetAll(String searchInput)
+    {
+        if (Guid.TryParse(searchInput, out Guid id))
         {
-            return await logReader.GetLastNEntriesAsync(n, new []
+            var logEntry = await logReader.GetByIdAsync(id);
+            if (logEntry != null)
             {
-                LogType.Info,
-                LogType.Custom,
-                LogType.Error
-            });
+                ViewBag.Specific = logEntry;
+            }
+            else
+            {
+                ViewBag.Error = "Entry Code does not exist";
+            }
+        }
+        else
+        {
+            ViewBag.Error = "Entry Code does not exist";
         }
 
-        [HttpGet("logs/all")]
-        public async Task<PageWrapper<ILogEntry>> GetAll()
+
+        var results = await logReader.GetAll(new PageInfo()
         {
-            return await logReader.GetAll(new PageInfo()
-            {
-                Page = 0,
-                PageSize = 10
-            }, new FilterParam());
-        }
+            Page = 0,
+            PageSize = 10
+        }, new FilterParam());
+
+        var viewData = results.Items;
+
+        ViewBag.LastN = viewData;
+        return View("Index");
     }
 }

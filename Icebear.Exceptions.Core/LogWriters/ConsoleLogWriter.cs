@@ -16,7 +16,7 @@ namespace Icebear.Exceptions.Core.LogWriters
             Func<Exception, ILogDescription> exceptionTextProvider,
             Func<Exception, string> codeTextProvider,
             Func<Exception, string> sourceProvider) 
-            : base(exceptionTextProvider, codeTextProvider, sourceProvider)
+            : base(exceptionTextProvider, sourceProvider: codeTextProvider, codeProvider: sourceProvider)
         {
             this.writer = writer;
             this.format = format;
@@ -27,16 +27,14 @@ namespace Icebear.Exceptions.Core.LogWriters
             var threadId = 0; // Thread.CurrentThread.ManagedThreadId;
             // TODO: if a format is given, respect the format
             Console.WriteLine($"{DateTime.Now}:[{threadId}][ERROR]: {exception}");
-            await writer.LogErrorAsync(exception);
-            return null;
+            return await writer.LogErrorAsync(exception);
         }
 
         public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
         {
             var threadId = 0; //Thread.CurrentThread.ManagedThreadId;
             Console.WriteLine($"{DateTime.Now}:[{threadId}][WARN]: {exception}");
-            await writer.LogWarnAsync(exception);
-            return null;
+            return await writer.LogWarnAsync(exception);
         }
 
         public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)

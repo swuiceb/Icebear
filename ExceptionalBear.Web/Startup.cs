@@ -1,3 +1,4 @@
+using ExceptionalBear.Web.Filters;
 using Icebear.Exceptions.Core.LogReaders;
 using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.LogWriters.Providers;
@@ -8,6 +9,7 @@ using Icebear.Exceptions.Db.Ef.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,13 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
+        services.AddMvc(
+            options =>
+            {
+                options.EnableEndpointRouting = false;
+                options.Filters.Add(new ExceptionFilter());
+            });
+        
         InitializeLogger(services);
     }
 
@@ -61,19 +70,25 @@ public class Startup
     {
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+            //app.UseDeveloperExceptionPage();
         }
 
-        app.UseExceptionHandler("/Error");
+        app.UseExceptionHandler(
+            new ExceptionHandlerOptions()
+            {
+                AllowStatusCode404Response = true,
+                ExceptionHandlingPath = "/Error"
+            });
 
+        app.UseMvc();
         app.UseStatusCodePages();
         app.UseRouting();
         app.UseStaticFiles();
 
-        app.UseEndpoints(endpoints =>
+        /*app.UseEndpoints(endpoints =>
         {
             endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
             endpoints.MapControllers();
-        });
+        });*/
     }
 }
