@@ -56,16 +56,23 @@ var logger = loggerBuilder.Build(LogType.Info);
 *The above code builds the default logger which sends the log messages to Console, this isn't at all exciting*
 
 You likely would want to do something like the following to send the logs to DB.
-// TODO: See DB options from Icebear.Exceptions.Db.Ef
+
 ```c#
 var logger = loggerBuilder.WithWriter(
         loggerBuilder.BuildInDb(LogContextProvider))
         .Build(LogType.Info);
 ```
+or for a bit more efficiency, a DB implementation that doesn't log every entry until it has enough
+```c#
+var logger = loggerBuilder.WithWriter(loggerBuilder.BuildRollingDb(
+        new Ef5Repository(LogContextProvider), 50))
+    .Build(LogType.Warning);
+```
+
 4. Add it to service collection
 ```c#
 services.AddSingleton<ILogWriter>(logger.Writer);
-services.AddSingleton<ILogWriter>(logger.Reader);
+services.AddSingleton<ILogReader>(logger.Reader);
 ```
 5. Start Logging
 Logging is simple, for ```Warn``` and ```Error``` type of logs, use the LogWarn or LogError Api
@@ -81,8 +88,12 @@ For all custom events/logs, use the LogAsync method
 ```c#
         await LogAsync<T>(LogType logType, string message, T detail);
 ```
+
+
 TODO:
-Reader already works, working on a Razor page to make a pretty page
+- Reader already works, working on a Razor page to make a pretty page
+- Test with Dot net core 3.1 (works with .net 5 and .net 6, .Net 6 needs EF Core 6)
+- A nosql implementation
 
 # What's in this Repo
 In this Repo, there is one Abstraction (core) project, and one Implementation Project.
