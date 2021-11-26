@@ -64,7 +64,8 @@ var logger = loggerBuilder.WithWriter(
 ```
 4. Add it to service collection
 ```c#
-services.AddSingleton<ILogWriter>(logger);
+services.AddSingleton<ILogWriter>(logger.Writer);
+services.AddSingleton<ILogWriter>(logger.Reader);
 ```
 5. Start Logging
 Logging is simple, for ```Warn``` and ```Error``` type of logs, use the LogWarn or LogError Api
@@ -80,6 +81,9 @@ For all custom events/logs, use the LogAsync method
 ```c#
         await LogAsync<T>(LogType logType, string message, T detail);
 ```
+TODO:
+Reader already works, working on a Razor page to make a pretty page
+
 # What's in this Repo
 In this Repo, there is one Abstraction (core) project, and one Implementation Project.
 - Icebear.Exceptions.Core - Base implementation encompasses the base implementation for each type of logger
