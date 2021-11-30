@@ -6,6 +6,7 @@ using Icebear.Exceptions.Core.Models;
 using Icebear.Exceptions.Db.Ef;
 using Icebear.Exceptions.Db.Ef.LogWriters;
 using Icebear.Exceptions.Db.Ef.Repository;
+using Icebear.Exceptions.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -83,6 +84,7 @@ public class Startup
         app.UseMvc();
         app.UseStatusCodePages();
         app.UseRouting();
+        app.UseIcebearException();
         app.UseStaticFiles();
 
         /*app.UseEndpoints(endpoints =>

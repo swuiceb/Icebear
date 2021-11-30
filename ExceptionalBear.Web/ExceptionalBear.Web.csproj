@@ -8,6 +8,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Icebear.Exceptions.Core\Icebear.Exceptions.Core.csproj" />
       <ProjectReference Include="..\Icebear.Exceptions.Db.Ef\Icebear.Exceptions.Db.Ef.csproj" />
+      <ProjectReference Include="..\Icebear.Exceptions.Middleware\Icebear.Exceptions.Middleware.csproj" />
     </ItemGroup>
 
     <ItemGroup>
