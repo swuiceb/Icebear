@@ -28,5 +28,20 @@ namespace Icebear.Exceptions.Core.Tests.LogWriters
             await loggerWrapper.LogErrorAsync(ExceptionUtilities.GetNestedException("inner", "outer"));
             await logWriter.Received(1).LogErrorAsync(Arg.Any<Exception>());
         }
+        
+        [Test]
+        public async Task LogWrapper_EnsureParametersAreSubmitted()
+        {
+            var logWriter = Substitute.For<ILogWriter>();
+            var loggerWrapper = new LoggerWrapper(LogType.Trace, logWriter);
+
+            await loggerWrapper.LogErrorAsync(ExceptionUtilities.GetNestedException("inner", "outer"), "error");
+            await loggerWrapper.LogWarnAsync(ExceptionUtilities.GetNestedException("inner", "outer"), "warn");
+            await loggerWrapper.LogAsync(LogType.Custom, "Log", 5, "log", "custom");
+            
+            await logWriter.Received(1).LogErrorAsync(Arg.Any<Exception>(), "error");
+            await logWriter.Received(1).LogWarnAsync(Arg.Any<Exception>(), "warn");
+            await logWriter.Received(1).LogAsync(LogType.Custom, "Log", 5, "log", "custom");
+        }
     }
 }

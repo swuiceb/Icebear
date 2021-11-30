@@ -24,14 +24,14 @@ public class TestController : Controller
     [HttpGet("exception")]
     public async Task Exception()
     {
-        await exceptionLogWriter.LogErrorAsync(new Exception("My bad"));
+        await exceptionLogWriter.LogErrorAsync(new Exception("My bad"), "myTest", "exception");
         throw new Exception("My Bad");
     }
 
     [HttpGet("warning")]
     public async Task Warning()
     {
-        await exceptionLogWriter.LogWarnAsync(new Exception("My bad"));
+        await exceptionLogWriter.LogWarnAsync(new Exception("My bad"), "warn");
     }
 
     [HttpGet("log/{logtype}")]
@@ -41,7 +41,7 @@ public class TestController : Controller
         {
             testString = "TestString",
             testInt = 3
-        });
+        }, "log", "mytest");
     }
 
     [HttpGet("logs/lastN/{n}")]
@@ -74,7 +74,12 @@ public class TestController : Controller
     }
 
     [HttpGet("logs/all")]
-    public async Task<IActionResult> GetAll(String searchInput)
+    public async Task<IActionResult> GetAll(
+        String searchInput, 
+        String[]logTypes,
+        String[]tags,
+        DateTimeOffset? from,
+        DateTimeOffset? to)
     {
         if (Guid.TryParse(searchInput, out Guid id))
         {
@@ -88,20 +93,43 @@ public class TestController : Controller
                 ViewBag.Error = "Entry Code does not exist";
             }
         }
-        else
+        else if (searchInput != null)
         {
             ViewBag.Error = "Entry Code does not exist";
         }
-
+   
+        IEnumerable<LogType> typeFilters = new[] {LogType.Warning, LogType.Error, LogType.Custom};
+        IEnumerable<String> allTags =  await logReader.GetTagsAsync();
+        IEnumerable<String> selectedTags = 
+            tags is {Length: > 0} ? tags : allTags.ToList();
+        
+        if (logTypes is {Length: > 0})
+        {
+            typeFilters = logTypes.Select(f => Enum.TryParse<LogType>(
+                f,
+                out LogType logType)
+                ? logType
+                : LogType.Error);
+        }
 
         var results = await logReader.GetAll(new PageInfo()
         {
             Page = 0,
             PageSize = 10
-        }, new FilterParam());
+        }, new FilterParam()
+        {
+            Since = from,
+            Until = to,
+            Tags = selectedTags,
+            LogTypes = typeFilters.ToArray()
+        });
 
         var viewData = results.Items;
 
+        ViewBag.SelectedFilterTypes = typeFilters;
+        
+        ViewBag.Tags = allTags;
+        ViewBag.SelectedTags = selectedTags;
         ViewBag.LastN = viewData;
         return View("Index");
     }

@@ -6,6 +6,8 @@ using Icebear.Exceptions.Core.Models;
 
 public interface ILoggerRepository
 {
+    Task<ILoggerRepository> VerifyAsync();
+    
     Task<IEnumerable<ITag>> GetTagsAsync();
     Task<IEnumerable<ILogEntry>> SaveAsync(IEnumerable<ILogEntry> logs);
     Task<ILogEntry> SaveAsync(ILogEntry log);

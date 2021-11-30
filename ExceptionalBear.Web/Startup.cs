@@ -53,7 +53,7 @@ public class Startup
             .WithExceptionTextProvider(ExceptionTextProviders.Default);
 
         var logger = loggerBuilder.WithWriter(loggerBuilder.BuildInDb(
-                new Ef5Repository(LogContextProvider)))
+                new EfCoreRepository(LogContextProvider).VerifyAsync().Result))
             .Build(LogType.Warning);
         
         services.AddSingleton<ILogWriter>(logger.Writer);

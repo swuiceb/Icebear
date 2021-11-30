@@ -59,7 +59,7 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
 
         public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)
         {
-            var log = Log2Entity(logType, detail, text: message);
+            var log = Log2Entity(logType, detail, code: "", text: message, tags);
             rollingLog.Add(log);
             
             if (rollingLog.Count() >= batchSize)

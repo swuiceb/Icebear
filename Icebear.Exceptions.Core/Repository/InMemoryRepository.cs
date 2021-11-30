@@ -18,6 +18,12 @@ namespace Icebear.Exceptions.Core.Repository
             entries = new Queue<ILogEntry>(max);
         }
 
+        public async Task<ILoggerRepository> VerifyAsync()
+        {
+            await Task.Delay(0);
+            return this;
+        }
+
         public async Task<IEnumerable<ITag>> GetTagsAsync()
         {
             await Task.Delay(0);

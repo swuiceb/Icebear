@@ -62,24 +62,15 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
 
         protected async Task<ILogEntry> StoreLog<T>(LogType logType, string message, T detail, string[] tags)
         {
-            var entity = new LogEntity()
-            {
-                Id = Guid.NewGuid(),
-                LogType = logType,
-                Tags = await TagsToRaw(tags),
-                Code =  "",
-                Source = Environment.MachineName,
-                Text = message,
-                Description = (typeof(T) != typeof(string) && !typeof(T).IsValueType) ? 
-                    JsonConvert.SerializeObject(detail) : detail?.ToString()
-            };
+            var entity = Log2Entity(logType, detail, "", message, tags);
 
             await repository.SaveAsync(entity);
 
             return entity;
         }
 
-        protected LogEntity Log2Entity<T>(LogType logType, T detail, string? code = null, string? text = null)
+        protected LogEntity Log2Entity<T>(LogType logType, T detail, string? code = null, string? text = null,
+            params string[] tags)
         {
             return new LogEntity()
             {
@@ -104,6 +95,7 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
                 Code = CodeProvider?.Invoke(exception) ?? "",
                 Source = SourceProvider?.Invoke(exception) ?? Environment.MachineName,
                 Text = ExceptionTextProvider(exception).Text,
+                SystemContext = SystemContextProvider?.Invoke(),
                 Description = ExceptionTextProvider(exception).Description,
             };
         }
@@ -119,6 +111,12 @@ namespace Icebear.Exceptions.Db.Ef.LogWriters
             await repository.SaveAsync(entity);
 
             return entity;
+        }
+
+        public async Task<IEnumerable<string>> GetTagsAsync()
+        {
+            await Task.Delay(0);
+            return tags;
         }
 
         public async Task<ILogEntry> GetByIdAsync(Guid id)

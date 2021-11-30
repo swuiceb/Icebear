@@ -23,7 +23,7 @@ namespace ExceptionalBear.Web.Controllers
             var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
             var exception = context.Error; // Your exception
 
-            var entry = await writer.LogErrorAsync(exception);
+            var entry = await writer.LogErrorAsync(exception, "global");
 
             ViewBag.Error = entry;
             return View("ErrorDetail");

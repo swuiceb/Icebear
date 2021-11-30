@@ -1,32 +1,127 @@
 @page
+@using Icebear.Exceptions.Core.Models
+@using Microsoft.AspNetCore.Html
 @model ExceptionalBear.Web.Views.Test.Index
 
 
 @{
     Layout = null;
-    var lastN = ViewBag.LastN;
+    var lastN = ViewBag.LastN as IEnumerable<ILogEntry>;
     var specific = ViewBag.Specific;
     var error = ViewBag.Error;
+    var tags = ViewBag.Tags as IEnumerable<string>;
+    var selectedTags = ViewBag.SelectedTags as IEnumerable<string>;
+    var availableTypes = Enum.GetValues<LogType>();
+    var selectedFilterTypes = ViewBag.SelectedFilterTypes as IEnumerable<LogType>;
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>Icebear Logs</title>
+    <script>
+        function showModal(logId){
+            var commentDetail = document.getElementById(logId);
+            commentDetail.style = "display:block";
+        }
+        function hideModal(logId){
+            var commentDetail = document.getElementById(logId);
+            commentDetail.style = "display:none";
+        }
+        function preSubmitFilter(){
+            var filterForm = document.getElementById('filter');
+            var sinceDate = filterForm['sinceDate'].value;
+            var sinceTime = filterForm['sinceTime'].value;
+            var toDate = filterForm['toDate'].value;
+            var toTime = filterForm['toTime'].value;
+            
+            if (sinceDate){
+                filterForm['from'].value = sinceDate + (sinceTime ? 'T' + sinceTime : '');
+            }
+            if (toDate){
+                filterForm['to'].value = toDate + (toTime ? 'T' + toTime : '');
+            }
+            
+            filterForm.submit();
+        }
+    </script>
 </head>
 <body>
 <main>
     <section>
         <form name="search" method="get">
-            <label for="search-input">Search For Error</label>
-            <input ID="search-input" name="searchInput" type="text"/>
-            <input ID="submit" type="submit"/>
+            <section>
+                <label for="search-input">Search For Error</label>
+                <input ID="search-input" name="searchInput" type="text"/>
+            </section>
+            <input ID="submitById" type="submit">Search</input>
+            @if (error != null)
+            {
+                <label id="notfound">@error</label>
+            }
         </form>
-        @if (error != null)
-        {
-            <label id="notfound">@error</label>
-        }
+
+        <form id="filter" name="filter" method="get">
+            <section title="Date/Time Range">
+                <label for="sinceDate">From</label>
+                <input type="date" id="sinceDate" />
+                <input type="time" id="sinceTime" />
+                <input type="hidden" id="from" name="from" />
+                
+                <label for="toDate">To</label>
+                <input type="date" id="toDate" />
+                <input type="time" id="toTime" />
+                <input type="hidden" id="to" name="to" />
+            </section>
+            <section title="Tags">
+                <label>Filter by Tags</label>
+                @foreach (var tag in tags)
+                {
+                    var isSelected = selectedTags.Contains(tag);
+                    <ul>
+                        @if (@isSelected)
+                        {
+                            <input type="checkbox" id="@tag"
+                                   value="@tag"
+                                   name="tags"
+                                   checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="@tag"
+                                   value="@tag"
+                                   name="tags">
+                        }
+                        <label for="@tag">@tag</label>
+                    </ul>
+                }
+            </section>
+            <section>
+                <label>Filter by Types</label>
+                @foreach (var logType in availableTypes)
+                {
+                    var isSelected = selectedFilterTypes.Contains(logType);
+                    var logString = @logType.ToString();
+                    <div>
+                        @if (isSelected)
+                        {
+                            <input type="checkbox" id="@logString"
+                                   value="@logString"
+                                   name="logtypes"
+                                   checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="@logString"
+                                   value="@logString"
+                                   name="logtypes">
+                        }
+                        <label for="@logString">@logString</label>
+                    </div>
+                }
+            </section>
+            <input ID="submit" type="submit" onclick="preSubmitFilter();">Filter</input>
+        </form>
     </section>
     <section>
         @if (specific != null)
@@ -34,14 +129,17 @@
             @specific
         }
     </section>
-    <table>
+    <table width="100%" style="table-layout:auto;border-spacing: 4px;">
+        <col style="width:300px">
+        <col style="width:100px">
         <thead>
         <tr>
             <th>Id</th>
             <th>Type</th>
             <th>Message</th>
             <th>Description</th>
-            <th>UserContext</th>
+            <th>System Information</th>
+            <th>Occurred</th>
         </tr>
         </thead>
         <tbody>
@@ -51,8 +149,31 @@
                 <td>@log.Id</td>
                 <td>@log.LogType.ToString()</td>
                 <td>@log.Text</td>
-                <td>@log.Description</td>
-                <td>@log.UserContext</td>
+                <td>
+                    @{
+                        if (@log.Description is {Length: > 100 })
+                        {
+                            var s = $"{@log.Description.Substring(0, 100)} + ...";
+                            <a href="#" onclick="showModal('@log.Id')">@s</a>
+                        }
+                        else
+                        {
+                            @log.Description
+                        }
+                    }
+                    <aside>
+                        <dialog id="@log.Id" class="modal" style="display:none">
+                            <comment id="detail">@log.Description</comment>
+                            <comment id="systemDetail">@log.SystemContext</comment>
+                            <comment id="userDetail">@log.UserContext</comment>
+                            <menu>
+                                <button value="cancel" onclick="hideModal('@log.Id')">X</button>
+                            </menu>
+                        </dialog>
+                    </aside>
+                </td>
+                <td>@log.SystemContext</td>
+                <td>@log.OccurredDate</td>
             </tr>
         }
         </tbody>

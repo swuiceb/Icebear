@@ -2,13 +2,13 @@ namespace Icebear.Exceptions.Core.Models
 {
     public enum LogType
     {
-        Trace,
-        Info,
-        Warning,
-        Error,
-        Custom,
-        Custom1,
-        Custom2,
-        Custom3
+        Trace = 0,
+        Info = 1,
+        Warning = 2,
+        Error = 3,
+        Custom = 4,
+        Custom1 = 5,
+        Custom2 = 6,
+        Custom3 = 7
     }
 }

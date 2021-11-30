@@ -20,7 +20,7 @@ namespace Icebear.Exceptions.Core.LogWriters.Providers
 
         public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
-            return await LogException(LogType.Error, exception);
+            return await LogException(LogType.Error, exception, tags);
         }
 
         public async Task<ILogEntry> LogWarnAsync(Exception exception,params String[] tags)
@@ -45,7 +45,7 @@ namespace Icebear.Exceptions.Core.LogWriters.Providers
 
         public async Task<ILogEntry> LogAsync<T>(LogType logType, string message, T detail,params String[] tags)
         {
-            if (logLevel >= logType)
+            if (logLevel <= logType)
             {
                 return await logger.LogAsync(logType, message, detail, tags);
             }
