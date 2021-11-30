@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>0.0.14</PackageVersion>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+        <Title>IceBear Exceptional Logging Mvc with Views</Title>
+        <Authors>swu</Authors>
+        <Description>Mvc Helper for the IceBear Exceptional Logging library . 
+This is a Razor class library</Description>
+        <Copyright>swu</Copyright>
+        <PackageLicenseUrl>https://github.com/swuiceb/Icebear/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/swuiceb/Icebear</RepositoryUrl>
+        <PackageTags>Logging Common Mvc</PackageTags>
+        <PackageReleaseNotes>Initial ugly release</PackageReleaseNotes>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <TargetFramework>net5.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="IceBear.Exceptions.Core" Version="0.0.14" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="ExampleJsInterop.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\Styles\_icebear.css" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+      <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
+    </ItemGroup>
+
+</Project>

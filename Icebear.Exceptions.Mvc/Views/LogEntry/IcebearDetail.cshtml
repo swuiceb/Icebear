@@ -1,0 +1,86 @@
+@page
+@using Icebear.Exceptions.Core.Models
+@model Icebear.Exceptions.Mvc.Views.LogEntry.IcebearDetail
+
+@{
+    Layout = null;
+    var log = ViewBag.Specific as ILogEntry;
+    var relevantLogs = ViewBag.Relevant as IEnumerable<ILogEntry>;
+    var title = ViewBag.Title ?? $"Icebear Exception Detail for {@log?.Id}";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@title</title>
+    <script>
+            function showModal(logId){
+                var commentDetail = document.getElementById(logId);
+                commentDetail.style = "display:block";
+            }
+            function hideModal(logId){
+                var commentDetail = document.getElementById(logId);
+                commentDetail.style = "display:none";
+            }
+        </script>
+</head>
+<body>
+<div>
+    <header><b>@title</b></header>
+    <section>
+        <header>Related entries</header>
+        <hr />
+        <section><a href="/iblogs">Show Current Logs</a> </section>
+        <table width="100%" style="table-layout:auto;border-spacing: 4px;">
+            <col style="width:300px">
+            <col style="width:100px">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Description</th>
+                <th>System Information</th>
+                <th>Occurred</th>
+            </tr>
+            @foreach (var item in relevantLogs)
+            {
+                var isCurrent = @item.Id == @log.Id;
+                var displayStyle = isCurrent ? "display:block" : "display:none";
+                var backgroundStyle = isCurrent ? "background-color:#BEDEAD" : "";
+                <tr style="@backgroundStyle">
+                    <td>@item.Id</td>
+                    <td>@item.LogType.ToString()</td>
+                    <td>@item.Text</td>
+                    <td>
+                        @{
+                            if (@item.Description is {Length: > 100 })
+                            {
+                                var s = $"{@item.Description.Substring(0, 100)} + ...";
+                                <a href="#" onclick="showModal('@item.Id')">@s</a>
+                            }
+                            else
+                            {
+                                @item.Description
+                            }
+                        }
+                        <aside>
+                            <dialog id="@item.Id" class="modal" style="@displayStyle">
+                                <comment id="detail">@item.Description</comment>
+                                <comment id="systemDetail">@item.SystemContext</comment>
+                                <comment id="userDetail">@item.UserContext</comment>
+                                <menu>
+                                    <button value="cancel" onclick="hideModal('@item.Id')">X</button>
+                                </menu>
+                            </dialog>
+                        </aside>
+                    </td>
+                    <td>@item.SystemContext</td>
+                    <td>@item.OccurredDate</td>
+                </tr>
+            }
+        </table>
+    </section>
+</div>
+</body>
+</html>

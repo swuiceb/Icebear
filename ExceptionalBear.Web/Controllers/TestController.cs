@@ -8,6 +8,7 @@ using Icebear.Exceptions.Core.LogWriters;
 using Icebear.Exceptions.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
+[Route("testV2")]
 public class TestController : Controller
 {
     private readonly ILogWriter exceptionLogWriter;

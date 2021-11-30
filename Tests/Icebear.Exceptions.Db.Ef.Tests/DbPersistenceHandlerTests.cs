@@ -155,6 +155,33 @@ public class DbPersistenceHandlerTests
     }
 
     [Test]
+    public async Task GetAll_Paged()
+    {
+        var handler = DbLogWriter.Create(
+            repository,
+            ExceptionTextProviders.Default,
+            codeProvider: (ex) => ex.Message);
+
+        for (int i = 0; i < 100; i++)
+        {
+            await handler.LogAsync(LogType.Custom, "log message", i);
+        }
+
+        var pageInfo = PageInfo.Create(3, 10);
+        var results = await repository.GetAll(pageInfo, new FilterParam());
+        Assert.AreEqual(100, results.Total);
+        Assert.AreEqual(10, results.Items.Count());
+        // from 30 to 40
+        // ordered by occurred date desc
+        var resultList = results.Items.ToList();
+        for (int i = 60; i < 70; i++)
+        {
+            var target = results.Items.ElementAt(9 - (i - 60));
+            Assert.AreEqual(i.ToString(), target.Description);
+        }
+    }
+    
+    [Test]
     public async Task GetAllFilters_Date()
     {
         var handler = DbLogWriter.Create(
