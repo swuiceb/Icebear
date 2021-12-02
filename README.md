@@ -1,6 +1,6 @@
-# Icebear Logging Project
+# yourLogger Logging Library
 # What is it
-Icebear Exception Logging Library is an attempt to simplify the day to day workflow of a developer by creating a layer of abstraction that is extensible, with sensible defaults that anyone can start using within minutes.
+yourLogger Exception Logging Library is an attempt to simplify the day to day workflow of a developer by creating a layer of abstraction that is extensible, with sensible defaults that anyone can start using within minutes.
 
 The goal is that is all a developer needs to do, until they are ready to move on to an observability tool such as Datadog.
 
@@ -89,14 +89,13 @@ For all custom events/logs, use the LogAsync method
         await LogAsync<T>(LogType logType, string message, T detail);
 ```
 
-
 TODO:
-- Reader already works, working on a Razor page to make a pretty page
 - Test with Dot net core 3.1 (works with .net 5 and .net 6, .Net 6 needs EF Core 6)
 - A nosql implementation
 
 # What's in this Repo
 In this Repo, there is one Abstraction (core) project, and one Implementation Project.
-- Icebear.Exceptions.Core - Base implementation encompasses the base implementation for each type of logger
+- yourLogger.Exceptions.Core - Base implementation encompasses the base implementation for each type of logger
   - The core project also includes an InMemory implementation as a sample
-- Icebear.Exceptions.Db.Ef - Implementation that uses a DB as storage mechanism
+- yourLogger.Exceptions.Db.Ef - Implementation that uses a DB as storage mechanism
+- yourLogger.Exceptions.Mvc - Sample endpoint implementations for reading and displaying of recorded logs

@@ -1,17 +1,17 @@
 using System.Configuration;
-using Icebear.Exceptions.Core.LogReaders;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.LogWriters.Providers;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Db.Ef;
-using Icebear.Exceptions.Db.Ef.LogWriters;
-using Icebear.Exceptions.Db.Ef.Repository;
-using Icebear.Exceptions.Mvc.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using yourLogs.Exceptions.Core.LogReaders;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.LogWriters.Providers;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Db.Ef;
+using yourLogs.Exceptions.Db.Ef.LogWriters;
+using yourLogs.Exceptions.Db.Ef.Repository;
+using yourLogs.Exceptions.Mvc.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 var dbOptions = new DbContextOptionsBuilder()

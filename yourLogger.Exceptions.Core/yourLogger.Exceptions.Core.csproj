@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>yourLogs.Exceptions.Core</RootNamespace>
+        <AssemblyName>yourLogger.Exceptions.Core</AssemblyName>
+        <LangVersion>10</LangVersion>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <FileVersion>0.0.1</FileVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>yourLogger Exceptional Logging</Title>
+        <Authors>swu</Authors>
+        <Description>A C# abstraction built on top of .Net 6 to simplify the task of adding logging functionality into a .Net Project</Description>
+        <PackageLicenseUrl>https://github.com/swuiceb/yourLogger/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/swuiceb/yourLogger</RepositoryUrl>
+        <PackageTags>Exception Logging Common</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <TargetFrameworks>net5.0;net6.0;netstandard1.7;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <PackageVersion>0.0.14</PackageVersion>
+        <PackageProjectUrl>https://github.com/swuiceb/yourLogger/tree/main/yourLogger.Exceptions.Core</PackageProjectUrl>
+        <Copyright>swu</Copyright>
+        <PackageReleaseNotes>Initial ugly release,</PackageReleaseNotes>
+        <Product>YourLogger logging library</Product>
+        <PackageId>yourLogger.Exceptions.Core</PackageId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+      <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+      <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+      <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+      <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="6.0.0" />
+    </ItemGroup>
+
+</Project>

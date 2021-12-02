@@ -6,13 +6,13 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageVersion>0.0.14</PackageVersion>
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-        <Title>IceBear Exceptional Logging Mvc with Views</Title>
+        <Title>yourLogger Exceptional Logging Mvc with Views</Title>
         <Authors>swu</Authors>
         <Description>Mvc Helper for the IceBear Exceptional Logging library . 
 This is a Razor class library</Description>
         <Copyright>swu</Copyright>
-        <PackageLicenseUrl>https://github.com/swuiceb/Icebear/blob/main/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/swuiceb/Icebear</RepositoryUrl>
+        <PackageLicenseUrl>https://github.com/swuiceb/yourLogger/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/swuiceb/yourLogger</RepositoryUrl>
         <PackageTags>Logging Common Mvc</PackageTags>
         <PackageReleaseNotes>Initial ugly release</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -27,9 +27,9 @@ This is a Razor class library</Description>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="IceBear.Exceptions.Core" Version="0.0.14" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+        <PackageReference Include="yourLogger.Exceptions.Core" Version="0.0.14" />
     </ItemGroup>
 
     <ItemGroup>
