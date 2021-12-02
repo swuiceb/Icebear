@@ -18,6 +18,7 @@ This is a Razor class library</Description>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <TargetFramework>net5.0</TargetFramework>
         <LangVersion>10</LangVersion>
+        <RootNamespace>yourLogs.Exceptions.Mvc</RootNamespace>
     </PropertyGroup>
 
 

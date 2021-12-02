@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Icebear.Exceptions.Core\yourLogs.Exceptions.Core.csproj" />
-      <ProjectReference Include="..\Icebear.Exceptions.Db.Ef\Icebear.Exceptions.Db.Ef.csproj" />
+      <ProjectReference Include="..\yourLogger.Exceptions.Core\yourLogger.Exceptions.Core.csproj" />
+      <ProjectReference Include="..\yourLogger.Exceptions.Db.Ef\yourLogger.Exceptions.Db.Ef.csproj" />
     </ItemGroup>
 
     <ItemGroup>

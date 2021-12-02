@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Icebear.Exceptions.Mvc\Icebear.Exceptions.Mvc.csproj" />
+      <ProjectReference Include="..\yourLogger.Exceptions.Mvc\yourLogger.Exceptions.Mvc.csproj" />
     </ItemGroup>
 
 </Project>

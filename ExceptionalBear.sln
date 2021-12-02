@@ -7,17 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionalBear.Web", "Exce
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exceptional.Core", "Exceptional.Core", "{D345627C-F04C-46DC-A92A-16D5A2389285}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yourLogs.Exceptions.Core", "Icebear.Exceptions.Core\yourLogs.Exceptions.Core.csproj", "{85F76DC7-E111-4153-BE4F-8807071E827E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yourLogger.Exceptions.Core", "yourLogger.Exceptions.Core\yourLogger.Exceptions.Core.csproj", "{85F76DC7-E111-4153-BE4F-8807071E827E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{498C6A44-B9FE-4759-AABB-58DFFC3FED52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Core.Tests", "Icebear.Exceptions.Core.Tests\Icebear.Exceptions.Core.Tests.csproj", "{546662DA-DF79-49F6-A40C-EB57F983477D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yourLogger.Exceptions.Core.Tests", "yourLogger.Exceptions.Core.Tests\yourLogger.Exceptions.Core.Tests.csproj", "{546662DA-DF79-49F6-A40C-EB57F983477D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Db.Ef", "Icebear.Exceptions.Db.Ef\Icebear.Exceptions.Db.Ef.csproj", "{F441D3E3-6FB3-48A8-993C-2DD4FE84CDC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yourLogger.Exceptions.Db.Ef", "yourLogger.Exceptions.Db.Ef\yourLogger.Exceptions.Db.Ef.csproj", "{F441D3E3-6FB3-48A8-993C-2DD4FE84CDC4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Db.Ef.Tests", "Tests\Icebear.Exceptions.Db.Ef.Tests\Icebear.Exceptions.Db.Ef.Tests.csproj", "{F571D46B-C4A1-439C-A778-2BFD85444D1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yourLogger.Exceptions.Db.Ef.Tests", "Tests\yourLogger.Exceptions.Db.Ef.Tests\yourLogger.Exceptions.Db.Ef.Tests.csproj", "{F571D46B-C4A1-439C-A778-2BFD85444D1E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Mvc", "Icebear.Exceptions.Mvc\Icebear.Exceptions.Mvc.csproj", "{3A8652F9-9423-4D9C-A67C-376A5E9DAB12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yourLogger.Exceptions.Mvc", "yourLogger.Exceptions.Mvc\yourLogger.Exceptions.Mvc.csproj", "{3A8652F9-9423-4D9C-A67C-376A5E9DAB12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionalBear.Net6.Web", "ExceptionalBear.Net6.Web\ExceptionalBear.Net6.Web.csproj", "{68C20E03-7C1B-4708-BFB3-6EC4F3EBF03E}"
 EndProject

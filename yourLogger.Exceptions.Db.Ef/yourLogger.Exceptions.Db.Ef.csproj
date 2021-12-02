@@ -7,19 +7,22 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageVersion>0.0.14</PackageVersion>
         <TargetFrameworks>net5.0;net6.0;netstandard2.1</TargetFrameworks>
-        <Title>IceBear Exceptional Logging using DB</Title>
+        <Title>yourLogger Exceptional Logging using DB</Title>
         <Authors>swu</Authors>
         <Description>A relational DB implementation built on top of the IceBear.Exceptions.Core for storing logs in</Description>
         <Copyright>swu</Copyright>
-        <PackageProjectUrl>https://github.com/swuiceb/Icebear/tree/main/Icebear.Exceptions.Db.Ef</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/swuiceb/Icebear/blob/main/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/swuiceb/Icebear</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/swuiceb/yourLogger/tree/main/yourLogger.Exceptions.Db.Ef</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/swuiceb/yourLogger/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/swuiceb/yourLogger</RepositoryUrl>
         <PackageTags>Exception Logging Common</PackageTags>
         <PackageReleaseNotes>Initial Ugly release</PackageReleaseNotes>
+        <AssemblyName>yourLogger.Exceptions.Db.Ef</AssemblyName>
+        <RootNamespace>yourLogs.Exceptions.Db.Ef</RootNamespace>
+        <PackageId>yourLogger.Exceptions.Db.Ef</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Icebear.Exceptions.Core\yourLogs.Exceptions.Core.csproj" />
+      <ProjectReference Include="..\yourLogger.Exceptions.Core\yourLogger.Exceptions.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,8 +30,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="IceBear.Exceptions.Core" Version="0.0.14" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
+      <PackageReference Include="yourLogger.Exceptions.Core" Version="0.0.14" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">

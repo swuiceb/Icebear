@@ -4,9 +4,9 @@
 
         <IsPackable>false</IsPackable>
 
-        <AssemblyName>Icebear.Exceptions.Core.Tests</AssemblyName>
+        <AssemblyName>yourLogger.Exceptions.Core.Tests</AssemblyName>
 
-        <RootNamespace>Icebear.Exceptions.Core.Tests</RootNamespace>
+        <RootNamespace>yourLogs.Exceptions.Core.Tests</RootNamespace>
 
         <LangVersion>10</LangVersion>
 
@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Icebear.Exceptions.Core\yourLogs.Exceptions.Core.csproj" />
+      <ProjectReference Include="..\yourLogger.Exceptions.Core\yourLogger.Exceptions.Core.csproj" />
     </ItemGroup>
 
 </Project>
