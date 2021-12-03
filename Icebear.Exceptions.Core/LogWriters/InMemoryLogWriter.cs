@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 using IceBear.Exceptions.Core.Models.Entity;
-using Icebear.Exceptions.Core.Repository;
+using yourLogs.Exceptions.Core.Repository;
 using Newtonsoft.Json;
 
-namespace Icebear.Exceptions.Core.LogWriters
+namespace yourLogs.Exceptions.Core.LogWriters
 {
     internal class InMemoryLogWriter : LogWriterBase, ILogWriter
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Icebear.Exceptions.Core.ErrorMessageHandlers;
+using yourLogs.Exceptions.Core.ErrorMessageHandlers;
 
-namespace Icebear.Exceptions.Core.ExceptionProcessors
+namespace yourLogs.Exceptions.Core.ExceptionProcessors
 {
     public static class ExceptionProcessorFactory
     {

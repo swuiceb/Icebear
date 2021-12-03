@@ -1,6 +1,6 @@
 using System;
 
-namespace Icebear.Exceptions.Core.Models
+namespace yourLogs.Exceptions.Core.Models
 {
     public interface ITag
     {

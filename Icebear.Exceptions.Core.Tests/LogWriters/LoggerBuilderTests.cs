@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Reflection;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.LogWriters.Providers;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.LogWriters.Providers;
+using yourLogs.Exceptions.Core.Models;
 using NUnit.Framework;
 
-namespace Icebear.Exceptions.Core.Tests.LogWriters
+namespace yourLogs.Exceptions.Core.Tests.LogWriters
 {
     [TestFixture]
     public class LoggerBuilderTests

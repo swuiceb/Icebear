@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExceptionalBear.Web.Views;
-using Icebear.Exceptions.Core.LogReaders;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.LogReaders;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("testV2")]

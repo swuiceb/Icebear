@@ -1,8 +1,8 @@
 using System;
 using System.Text;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Core.LogWriters.Providers
+namespace yourLogs.Exceptions.Core.LogWriters.Providers
 {
     public static class ExceptionTextProviders
     {

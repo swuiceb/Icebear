@@ -1,4 +1,4 @@
-namespace Icebear.Exceptions.Core
+namespace yourLogs.Exceptions.Core
 {
     public class Main
     {

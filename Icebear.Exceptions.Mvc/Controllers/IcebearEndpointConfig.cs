@@ -1,6 +1,6 @@
 using System;
 
-namespace Icebear.Exceptions.Mvc.Controllers
+namespace yourLogs.Exceptions.Mvc.Controllers
 {
     public class IcebearEndpointConfig
     {

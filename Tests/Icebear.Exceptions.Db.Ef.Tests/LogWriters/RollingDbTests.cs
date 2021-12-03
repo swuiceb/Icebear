@@ -1,14 +1,14 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.LogWriters.Providers;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Db.Ef.LogWriters.RollingDb;
-using Icebear.Exceptions.Db.Ef.Repository;
+using yourLogs.Exceptions.Core.LogWriters.Providers;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb;
+using yourLogs.Exceptions.Db.Ef.Repository;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
-namespace Icebear.Exceptions.Db.Ef.Tests.LogWriters
+namespace yourLogs.Exceptions.Db.Ef.Tests.LogWriters
 {
     [TestFixture]
     public class RollingDbTests

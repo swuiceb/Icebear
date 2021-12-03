@@ -1,4 +1,4 @@
-namespace Icebear.Exceptions.Core.Tests.LogWriters
+namespace yourLogs.Exceptions.Core.Tests.LogWriters
 {
     public class LoggerWrapTests
     {

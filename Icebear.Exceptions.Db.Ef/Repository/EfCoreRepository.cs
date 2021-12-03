@@ -5,12 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Db.Ef.Models;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Db.Ef.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Icebear.Exceptions.Db.Ef.Repository
+namespace yourLogs.Exceptions.Db.Ef.Repository
 {
     public sealed class EfCoreRepository : ILoggerRepository
     {

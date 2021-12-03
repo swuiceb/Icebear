@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.ExceptionProcessors;
-using Icebear.Exceptions.Core.LogWriters.Providers;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.ExceptionProcessors;
+using yourLogs.Exceptions.Core.LogWriters.Providers;
 
-namespace Icebear.Exceptions.Core.LogWriters
+namespace yourLogs.Exceptions.Core.LogWriters
 {
     public abstract class LogWriterBase
     {

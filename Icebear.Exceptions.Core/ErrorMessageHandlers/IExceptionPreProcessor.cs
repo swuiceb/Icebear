@@ -1,6 +1,6 @@
 using System;
 
-namespace Icebear.Exceptions.Core.ErrorMessageHandlers
+namespace yourLogs.Exceptions.Core.ErrorMessageHandlers
 {
     public interface IExceptionPreProcessor
     {

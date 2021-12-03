@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Icebear.Exceptions.Core.LogWriters.Providers
+namespace yourLogs.Exceptions.Core.LogWriters.Providers
 {
     public static class SystemContextProviders
     {

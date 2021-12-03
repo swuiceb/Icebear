@@ -1,7 +1,7 @@
-using Icebear.Exceptions.Db.Ef.Models;
+using yourLogs.Exceptions.Db.Ef.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Icebear.Exceptions.Db.Ef
+namespace yourLogs.Exceptions.Db.Ef
 {
     public class ErrorDbContext : DbContext
     {

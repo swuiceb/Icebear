@@ -1,6 +1,6 @@
 using System;
 
-namespace Icebear.Exceptions.Core.Tests.ExceptionProcessors
+namespace yourLogs.Exceptions.Core.Tests.ExceptionProcessors
 {
     public static class ExceptionUtilities
     {

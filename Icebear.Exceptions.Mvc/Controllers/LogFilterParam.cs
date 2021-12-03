@@ -1,6 +1,6 @@
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Mvc.Controllers
+namespace yourLogs.Exceptions.Mvc.Controllers
 {
     public class LogFilterParam
     {

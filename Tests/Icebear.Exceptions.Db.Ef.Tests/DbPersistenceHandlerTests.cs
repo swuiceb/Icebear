@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.ExceptionProcessors;
-using Icebear.Exceptions.Core.LogWriters.Providers;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.Tests.ExceptionProcessors;
-using Icebear.Exceptions.Db.Ef;
-using Icebear.Exceptions.Db.Ef.LogWriters;
-using Icebear.Exceptions.Db.Ef.Models;
-using Icebear.Exceptions.Db.Ef.Repository;
+using yourLogs.Exceptions.Core.ExceptionProcessors;
+using yourLogs.Exceptions.Core.LogWriters.Providers;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Tests.ExceptionProcessors;
+using yourLogs.Exceptions.Db.Ef;
+using yourLogs.Exceptions.Db.Ef.LogWriters;
+using yourLogs.Exceptions.Db.Ef.Models;
+using yourLogs.Exceptions.Db.Ef.Repository;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -77,7 +77,7 @@ public class DbPersistenceHandlerTests
             codeProvider: (ex) => ex.Message);
 
         await handler.LogWarnAsync(
-            Icebear.Exceptions.Core.Tests.ExceptionProcessors.ExceptionUtilities.GetNestedException("Inner", "Outer"));
+            yourLogs.Exceptions.Core.Tests.ExceptionProcessors.ExceptionUtilities.GetNestedException("Inner", "Outer"));
 
         var result = await context.Logs.FirstAsync(e => e.Code.Equals("Outer"));
         Assert.AreEqual(Environment.MachineName, result.Source);

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Db.Ef.Models;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Db.Ef.Models;
 
-namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
+namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb
 {
     public class RollingDbLogWriter : DbLogWriterBase, ILogWriter
     {

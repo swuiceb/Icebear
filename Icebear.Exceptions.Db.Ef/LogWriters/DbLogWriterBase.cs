@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.LogReaders;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Db.Ef.Models;
+using yourLogs.Exceptions.Core.LogReaders;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Db.Ef.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace Icebear.Exceptions.Db.Ef.LogWriters
+namespace yourLogs.Exceptions.Db.Ef.LogWriters
 {
     public abstract class DbLogWriterBase : 
         LogWriterBase,

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Icebear.Exceptions.Mvc.Views.LogEntry
+namespace yourLogs.Exceptions.Mvc.Views.LogEntry
 {
     public class IcebearDetail : PageModel
     {

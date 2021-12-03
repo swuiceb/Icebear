@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Core.LogReaders
+namespace yourLogs.Exceptions.Core.LogReaders
 {
     public interface ILogReader
     {

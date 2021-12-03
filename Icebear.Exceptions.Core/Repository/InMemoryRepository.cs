@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Core.Repository
+namespace yourLogs.Exceptions.Core.Repository
 {
     public class InMemoryRepository : ILoggerRepository
     {

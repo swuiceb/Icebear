@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Icebear.Exceptions.Db.Ef.LogWriters.RollingDb
+namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb
 {
     public class ConcurrentList<T>
     {

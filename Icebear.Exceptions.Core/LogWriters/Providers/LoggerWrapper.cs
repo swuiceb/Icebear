@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 using IceBear.Exceptions.Core.Models.Entity;
 
-namespace Icebear.Exceptions.Core.LogWriters.Providers
+namespace yourLogs.Exceptions.Core.LogWriters.Providers
 {
     internal class LoggerWrapper : ILogWriter
     {

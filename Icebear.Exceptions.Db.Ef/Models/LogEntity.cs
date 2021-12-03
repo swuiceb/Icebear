@@ -1,10 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Icebear.Exceptions.Db.Ef.Models
+namespace yourLogs.Exceptions.Db.Ef.Models
 {
     [Index("Id", IsUnique = true, Name = "UNQ_LOG_ID")]
     [Table("Logs")]

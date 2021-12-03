@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Db.Ef.LogWriters.RollingDb;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb;
 
-namespace Icebear.Exceptions.Db.Ef.LogWriters
+namespace yourLogs.Exceptions.Db.Ef.LogWriters
 {
     public static class LoggerBuilderExtension
     {

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Icebear.Exceptions.Db.Ef.Repository
+namespace yourLogs.Exceptions.Db.Ef.Repository
 {
     public static class PredicateBuilder
     {

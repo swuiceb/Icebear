@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Db.Ef.Models
+namespace yourLogs.Exceptions.Db.Ef.Models
 {
     [Table("Icebear_Tag")]
     public sealed class TagEntity : ITag

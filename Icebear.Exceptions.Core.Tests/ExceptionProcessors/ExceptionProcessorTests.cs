@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.ExceptionProcessors;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.ExceptionProcessors;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
 using NUnit.Framework;
 
-namespace Icebear.Exceptions.Core.Tests.ExceptionProcessors
+namespace yourLogs.Exceptions.Core.Tests.ExceptionProcessors
 {
     [TestFixture]
     public class ExceptionProcessorTests

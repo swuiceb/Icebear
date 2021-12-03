@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.LogWriters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Icebear.Exceptions.Core.Tests.PersistenceHandlers
+namespace yourLogs.Exceptions.Core.Tests.PersistenceHandlers
 {
     [TestFixture]
     public class InMemoryHandlerTests

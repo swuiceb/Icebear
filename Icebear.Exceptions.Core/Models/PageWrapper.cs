@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Icebear.Exceptions.Core.Models
+namespace yourLogs.Exceptions.Core.Models
 {
     public sealed class PageWrapper<T> : PageInfo
     {

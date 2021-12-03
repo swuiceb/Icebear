@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Db.Ef.LogWriters
+namespace yourLogs.Exceptions.Db.Ef.LogWriters
 {
     public sealed class DbLogWriter : DbLogWriterBase, ILogWriter
     {

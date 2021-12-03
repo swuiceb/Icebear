@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>IceBear.Exceptions.Core</RootNamespace>
-        <AssemblyName>IceBear.Exceptions.Core</AssemblyName>
+        <RootNamespace>yourLogs.Exceptions.Core</RootNamespace>
+        <AssemblyName>yourLogs.Exceptions.Core</AssemblyName>
         <LangVersion>10</LangVersion>
         <AssemblyVersion>0.0.1</AssemblyVersion>
         <FileVersion>0.0.1</FileVersion>
@@ -11,14 +11,15 @@
         <Authors>swu</Authors>
         <Description>A C# abstraction built on top of .Net 6 to simplify the task of adding logging functionality into a .Net Project</Description>
         <PackageLicenseUrl>https://github.com/swuiceb/Icebear/blob/main/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/swuiceb/Icebear</RepositoryUrl>
+        <RepositoryUrl>https://github.com/swuiceb/yourLogs</RepositoryUrl>
         <PackageTags>Exception Logging Common</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <TargetFrameworks>net5.0;net6.0;netstandard1.7;netstandard2.0;netstandard2.1</TargetFrameworks>
         <PackageVersion>0.0.14</PackageVersion>
-        <PackageProjectUrl>https://github.com/swuiceb/Icebear/tree/main/Icebear.Exceptions.Core</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/swuiceb/yourLogs/tree/main/yourLogs.Exceptions.Core</PackageProjectUrl>
         <Copyright>swu</Copyright>
         <PackageReleaseNotes>Initial ugly release,</PackageReleaseNotes>
+        <Product>YourLogger logging library</Product>
     </PropertyGroup>
 
     <ItemGroup>

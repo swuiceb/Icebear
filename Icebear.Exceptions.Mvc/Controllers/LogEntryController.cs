@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.LogReaders;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.LogReaders;
+using yourLogs.Exceptions.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Icebear.Exceptions.Mvc.Controllers
+namespace yourLogs.Exceptions.Mvc.Controllers
 {
     [Controller, Route("iblogs")]
     public class LogEntryController : Controller

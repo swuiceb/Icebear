@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics;
-using Icebear.Exceptions.Core.LogReaders;
-using Icebear.Exceptions.Core.LogWriters.Providers;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.LogReaders;
+using yourLogs.Exceptions.Core.LogWriters.Providers;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Core.LogWriters
+namespace yourLogs.Exceptions.Core.LogWriters
 {
     public class LoggerBuilder
     {

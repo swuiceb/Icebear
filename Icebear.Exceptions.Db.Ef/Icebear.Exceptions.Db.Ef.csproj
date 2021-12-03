@@ -19,7 +19,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Icebear.Exceptions.Core\Icebear.Exceptions.Core.csproj" />
+      <ProjectReference Include="..\Icebear.Exceptions.Core\yourLogs.Exceptions.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>

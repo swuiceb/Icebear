@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Db.Ef.LogWriters.RollingDb;
+using yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NUnit.Framework;
 
-namespace Icebear.Exceptions.Db.Ef.Tests.LogWriters
+namespace yourLogs.Exceptions.Db.Ef.Tests.LogWriters
 {
     [TestFixture]
     public class ConcurrentListTests

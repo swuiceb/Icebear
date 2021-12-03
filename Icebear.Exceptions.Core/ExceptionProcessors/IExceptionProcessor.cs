@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.ErrorMessageHandlers;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.ErrorMessageHandlers;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.Models;
 
-namespace Icebear.Exceptions.Core.ExceptionProcessors
+namespace yourLogs.Exceptions.Core.ExceptionProcessors
 {
     public interface IExceptionProcessor
     {

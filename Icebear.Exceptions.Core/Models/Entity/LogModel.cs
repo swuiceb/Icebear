@@ -1,5 +1,5 @@
 using System;
-using Icebear.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Models;
 
 namespace IceBear.Exceptions.Core.Models.Entity
 {

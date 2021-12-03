@@ -22,7 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Icebear.Exceptions.Core.Tests\Icebear.Exceptions.Core.Tests.csproj" />
-      <ProjectReference Include="..\..\Icebear.Exceptions.Core\Icebear.Exceptions.Core.csproj" />
+      <ProjectReference Include="..\..\Icebear.Exceptions.Core\yourLogs.Exceptions.Core.csproj" />
       <ProjectReference Include="..\..\Icebear.Exceptions.Db.Ef\Icebear.Exceptions.Db.Ef.csproj" />
     </ItemGroup>
 

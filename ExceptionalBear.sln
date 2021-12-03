@@ -1,22 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionalBear.Web", "ExceptionalBear.Web\ExceptionalBear.Web.csproj", "{D57CF3C2-DE9A-4BAC-8043-3D45E7BCB266}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionalBear.Web", "ExceptionalBear.Web\ExceptionalBear.Web.csproj", "{D57CF3C2-DE9A-4BAC-8043-3D45E7BCB266}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exceptional.Core", "Exceptional.Core", "{D345627C-F04C-46DC-A92A-16D5A2389285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icebear.Exceptions.Core", "Icebear.Exceptions.Core\Icebear.Exceptions.Core.csproj", "{85F76DC7-E111-4153-BE4F-8807071E827E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yourLogs.Exceptions.Core", "Icebear.Exceptions.Core\yourLogs.Exceptions.Core.csproj", "{85F76DC7-E111-4153-BE4F-8807071E827E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{498C6A44-B9FE-4759-AABB-58DFFC3FED52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icebear.Exceptions.Core.Tests", "Icebear.Exceptions.Core.Tests\Icebear.Exceptions.Core.Tests.csproj", "{546662DA-DF79-49F6-A40C-EB57F983477D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Core.Tests", "Icebear.Exceptions.Core.Tests\Icebear.Exceptions.Core.Tests.csproj", "{546662DA-DF79-49F6-A40C-EB57F983477D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icebear.Exceptions.Db.Ef", "Icebear.Exceptions.Db.Ef\Icebear.Exceptions.Db.Ef.csproj", "{F441D3E3-6FB3-48A8-993C-2DD4FE84CDC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Db.Ef", "Icebear.Exceptions.Db.Ef\Icebear.Exceptions.Db.Ef.csproj", "{F441D3E3-6FB3-48A8-993C-2DD4FE84CDC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icebear.Exceptions.Db.Ef.Tests", "Tests\Icebear.Exceptions.Db.Ef.Tests\Icebear.Exceptions.Db.Ef.Tests.csproj", "{F571D46B-C4A1-439C-A778-2BFD85444D1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Db.Ef.Tests", "Tests\Icebear.Exceptions.Db.Ef.Tests\Icebear.Exceptions.Db.Ef.Tests.csproj", "{F571D46B-C4A1-439C-A778-2BFD85444D1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Icebear.Exceptions.Mvc", "Icebear.Exceptions.Mvc\Icebear.Exceptions.Mvc.csproj", "{3A8652F9-9423-4D9C-A67C-376A5E9DAB12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icebear.Exceptions.Mvc", "Icebear.Exceptions.Mvc\Icebear.Exceptions.Mvc.csproj", "{3A8652F9-9423-4D9C-A67C-376A5E9DAB12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionalBear.Net6.Web", "ExceptionalBear.Net6.Web\ExceptionalBear.Net6.Web.csproj", "{68C20E03-7C1B-4708-BFB3-6EC4F3EBF03E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExceptionalBear.Net6.Web", "ExceptionalBear.Net6.Web\ExceptionalBear.Net6.Web.csproj", "{68C20E03-7C1B-4708-BFB3-6EC4F3EBF03E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +56,9 @@ Global
 		{68C20E03-7C1B-4708-BFB3-6EC4F3EBF03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68C20E03-7C1B-4708-BFB3-6EC4F3EBF03E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{85F76DC7-E111-4153-BE4F-8807071E827E} = {D345627C-F04C-46DC-A92A-16D5A2389285}
 		{498C6A44-B9FE-4759-AABB-58DFFC3FED52} = {D345627C-F04C-46DC-A92A-16D5A2389285}
@@ -60,5 +66,8 @@ Global
 		{F441D3E3-6FB3-48A8-993C-2DD4FE84CDC4} = {D345627C-F04C-46DC-A92A-16D5A2389285}
 		{F571D46B-C4A1-439C-A778-2BFD85444D1E} = {498C6A44-B9FE-4759-AABB-58DFFC3FED52}
 		{3A8652F9-9423-4D9C-A67C-376A5E9DAB12} = {D345627C-F04C-46DC-A92A-16D5A2389285}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {348D1E7F-A7D6-464D-9A7C-60AC091AA2E6}
 	EndGlobalSection
 EndGlobal

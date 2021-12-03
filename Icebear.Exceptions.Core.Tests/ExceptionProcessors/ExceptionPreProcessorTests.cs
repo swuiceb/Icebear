@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.ErrorMessageHandlers;
-using Icebear.Exceptions.Core.ExceptionProcessors;
+using yourLogs.Exceptions.Core.ErrorMessageHandlers;
+using yourLogs.Exceptions.Core.ExceptionProcessors;
 using NSubstitute;
 using NSubstitute.Core.Arguments;
 using NUnit.Framework;
 
-namespace Icebear.Exceptions.Core.Tests.ExceptionProcessors
+namespace yourLogs.Exceptions.Core.Tests.ExceptionProcessors
 {
     [TestFixture]
     public class ExceptionPreProcessorTests

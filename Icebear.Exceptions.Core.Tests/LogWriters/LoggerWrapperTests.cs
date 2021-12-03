@@ -1,14 +1,14 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.LogWriters;
-using Icebear.Exceptions.Core.LogWriters.Providers;
-using Icebear.Exceptions.Core.Models;
-using Icebear.Exceptions.Core.Tests.ExceptionProcessors;
+using yourLogs.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.LogWriters.Providers;
+using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Tests.ExceptionProcessors;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Icebear.Exceptions.Core.Tests.LogWriters
+namespace yourLogs.Exceptions.Core.Tests.LogWriters
 {
     [TestFixture]
     public class LoggerWrapperTests

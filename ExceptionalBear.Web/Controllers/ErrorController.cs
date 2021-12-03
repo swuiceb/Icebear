@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Icebear.Exceptions.Core.LogReaders;
-using Icebear.Exceptions.Core.LogWriters;
+using yourLogs.Exceptions.Core.LogReaders;
+using yourLogs.Exceptions.Core.LogWriters;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
