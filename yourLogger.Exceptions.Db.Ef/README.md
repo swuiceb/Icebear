@@ -68,7 +68,7 @@ This logger stores each log to the DB as they come in
 2. Rolling DB built with ```BuildWithRolling```
 The rolling DB implementation collects the logs in memory, and commits the entire batch to the database when there are more than > ```batchSize``` number of entries in memory.
 
-###Changing Table Name
+### Changing Table Name
 Although most of the EF Core implementation is internal to the nuget package, it is still possible to change the table name. Create a new Context, inherit LogDbContext, and have the LogContextProvider return your new Context.
 And you can change the default table settings via the OnConfiguring hook.
 
