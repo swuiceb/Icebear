@@ -1,7 +1,7 @@
-### yourLogger Exception EF Core Logger
+## yourLogger Exception EF Core Logger
 This is the EF Core implementation of the [yourLogger Logging Library](https://github.com/swuiceb/yourLogger/blob/main/README.md)
 
-### Why?
+## Why?
 The intention of the library was to simplify something all developers have to implement many times over their career.
 **Logging**
 
@@ -19,7 +19,7 @@ When an exception occurs, it may even be helpful to present a page to the user w
 yourLogger is a library that looks to abstract it all away.
 The Ef Core Logger implementation is the Ef core implementation of that abstraction.
 
-###
+##
 How do I use this?
 
 1. Install the [nuget package](https://www.nuget.org/packages/yourLogger.Exceptions.Db.Ef/).
@@ -61,14 +61,14 @@ var logger = loggerBuilder.WithWriter(
 
 6. As the core package, use ```c#logger.Writer``` and ```c#logger.Reader``` for all your logging needs.
 
-### Customization
+## Customization
 This library provides two different implementations:
 1. Simple DB built with ```BuildInDb``` or
 This logger stores each log to the DB as they come in
 2. Rolling DB built with ```BuildWithRolling```
 The rolling DB implementation collects the logs in memory, and commits the entire batch to the database when there are more than > ```batchSize``` number of entries in memory.
 
-### Changing Table Name
+## Changing Table Name
 Although most of the EF Core implementation is internal to the nuget package, it is still possible to change the table name. Create a new Context, inherit LogDbContext, and have the LogContextProvider return your new Context.
 And you can change the default table settings via the OnConfiguring hook.
 
