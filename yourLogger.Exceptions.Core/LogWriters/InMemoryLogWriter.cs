@@ -33,6 +33,21 @@ namespace yourLogs.Exceptions.Core.LogWriters
             return this;
         }
 
+        public ILogEntry LogError(Exception exception, params string[] tags)
+        {
+            return LogErrorAsync(exception, tags).Result;
+        }
+
+        public ILogEntry LogWarn(Exception exception, params string[] tags)
+        {
+            return LogWarnAsync(exception, tags).Result;
+        }
+
+        public ILogEntry Log<T>(LogType logType, string message, T detail, params string[] tags)
+        {
+            return LogAsync(logType, message, detail, tags).Result;
+        }
+
         public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
             var entry = ToInMemoryException(LogType.Error, exception);

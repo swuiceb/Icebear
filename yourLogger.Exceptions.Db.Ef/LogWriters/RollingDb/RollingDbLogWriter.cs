@@ -27,6 +27,24 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb
         }
         
         // TODO: Use DbLogWriterBase, write N Logs into the db
+        public ILogEntry LogError(Exception exception, params string[] tags)
+        {
+            // TODO: make sync version of storage, and flush
+            throw new NotImplementedException();
+        }
+
+        public ILogEntry LogWarn(Exception exception, params string[] tags)
+        {
+            // TODO: make sync version of storage, and flush
+            throw new NotImplementedException();
+        }
+
+        public ILogEntry Log<T>(LogType logType, string message, T detail, params string[] tags)
+        {
+            // TODO: make sync version of storage, and flush
+            throw new NotImplementedException();
+        }
+
         public async Task<ILogEntry> LogErrorAsync(Exception exception,params String[] tags)
         {
             var error = Exception2Log(exception, LogType.Error);
@@ -37,7 +55,7 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb
             {
                 // Atomic
                 ImmutableArray<LogEntity> immutableList = rollingLog.Flush();
-                await StoreInDb(immutableList);
+                await StoreInDbAsync(immutableList);
             }
             return error;
         }
@@ -51,7 +69,7 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb
             {
                 // Atomic
                 ImmutableArray<LogEntity> immutableList = rollingLog.Flush();
-                await StoreInDb(immutableList);
+                await StoreInDbAsync(immutableList);
             }
             
             return error;
@@ -66,7 +84,7 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb
             {
                 // Atomic
                 ImmutableArray<LogEntity> immutableList = rollingLog.Flush();
-                await StoreInDb(immutableList);
+                await StoreInDbAsync(immutableList);
             }
             
             return log;
@@ -74,17 +92,17 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb
 
         public override async Task<IEnumerable<ILogEntry>> GetLastNEntriesAsync(int n, LogType[] applicableTypes)
         {
-            await StoreInDb(rollingLog.Flush());
+            await StoreInDbAsync(rollingLog.Flush());
             return await base.GetLastNEntriesAsync(n, applicableTypes);
         }
 
         public override async Task<PageWrapper<ILogEntry>> GetAll(PageInfo pageInfo, FilterParam filters, SortByParam sortBy = null)
         {
-            await StoreInDb(rollingLog.Flush());
+            await StoreInDbAsync(rollingLog.Flush());
             return await base.GetAll(pageInfo, filters, sortBy);
         }
 
-        private async Task StoreInDb(ImmutableArray<LogEntity> logs)
+        private async Task StoreInDbAsync(ImmutableArray<LogEntity> logs)
         {
             if (logs.IsEmpty) return;
             foreach (var entity in logs)
