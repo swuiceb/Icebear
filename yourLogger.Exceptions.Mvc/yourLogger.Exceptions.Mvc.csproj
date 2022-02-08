@@ -4,7 +4,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>0.0.14</PackageVersion>
+        <PackageVersion>0.0.15</PackageVersion>
         <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
         <Title>yourLogger Exceptional Logging Mvc with Views</Title>
         <Authors>swu</Authors>
@@ -29,7 +29,7 @@ This is a Razor class library</Description>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
-        <PackageReference Include="yourLogger.Exceptions.Core" Version="0.0.14" />
+        <PackageReference Include="yourLogger.Exceptions.Core" Version="0.0.15" />
     </ItemGroup>
 
     <ItemGroup>
