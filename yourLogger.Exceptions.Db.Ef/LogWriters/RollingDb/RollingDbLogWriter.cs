@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using yourLogs.Exceptions.Core.LogWriters;
 using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Repository;
 using yourLogs.Exceptions.Db.Ef.Models;
 
 namespace yourLogs.Exceptions.Db.Ef.LogWriters.RollingDb

@@ -10,6 +10,7 @@ using yourLogs.Exceptions.Core.Models;
 using yourLogs.Exceptions.Db.Ef.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using yourLogs.Exceptions.Core.Repository;
 
 namespace yourLogs.Exceptions.Db.Ef.LogWriters
 {
@@ -18,7 +19,7 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters
         ILogReader
     {
         private readonly ILoggerRepository repository;
-        private IEnumerable<String> tags = new String[] { };
+        private IEnumerable<String> tags = Array.Empty<string>();
 
         protected DbLogWriterBase(
             [NotNull]ILoggerRepository repository,
@@ -36,20 +37,19 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters
             Init().Wait();
         }
 
-        public async Task Init()
+        private async Task Init()
         {
             await repository.VerifyAsync();
             tags = (await repository.GetTagsAsync())
-                .ToList()
                 .Select(t => t.Tag);
         }
 
-        protected async Task<String> TagsToRaw(IEnumerable<String> tags)
+        private async Task<String> TagsToRaw(IList<String> allRawTags)
         {
             var pendingTags = new List<TagEntity>();
-            foreach (var tag in tags)
+            foreach (var tag in allRawTags)
             {
-                if (!this.tags.Contains(tag))
+                if (!tags.Contains(tag))
                 {
                     pendingTags.Add(new TagEntity(){Tag = tag});
                 }
@@ -57,8 +57,8 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters
 
             // if tag does not exist, need to insert tag
             await repository.AddTagsAsync(pendingTags);
-            this.tags = this.tags.Concat(pendingTags.Select(p => p.Tag)).ToList();
-            return String.Join(",", tags);
+            tags = tags.Concat(pendingTags.Select(p => p.Tag)).ToList();
+            return String.Join(",", allRawTags);
         }
 
         protected async Task<ILogEntry> StoreLog<T>(LogType logType, string message, T detail, string[] tags)

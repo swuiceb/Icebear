@@ -9,12 +9,10 @@ namespace ExceptionalBear.Web.Controllers
     [Route("Error")]
     public class ErrorController: Controller
     {
-        private readonly ILogReader reader;
         private readonly ILogWriter writer ;
         
-        public ErrorController(ILogReader reader, ILogWriter writer)
+        public ErrorController(ILogWriter writer)
         {
-            this.reader = reader;
             this.writer = writer;
         }
         

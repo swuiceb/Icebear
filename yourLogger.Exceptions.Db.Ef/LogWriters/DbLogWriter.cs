@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using yourLogs.Exceptions.Core.LogWriters;
 using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Repository;
 
 namespace yourLogs.Exceptions.Db.Ef.LogWriters
 {

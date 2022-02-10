@@ -1,8 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using yourLogs.Exceptions.Core.Models;
+
+namespace yourLogs.Exceptions.Core.Repository;
 
 public interface ILoggerRepository
 {

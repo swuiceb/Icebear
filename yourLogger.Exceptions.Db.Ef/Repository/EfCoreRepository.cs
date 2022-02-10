@@ -9,6 +9,7 @@ using yourLogs.Exceptions.Core.Models;
 using yourLogs.Exceptions.Db.Ef.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using yourLogs.Exceptions.Core.Repository;
 
 namespace yourLogs.Exceptions.Db.Ef.Repository
 {
@@ -43,7 +44,7 @@ namespace yourLogs.Exceptions.Db.Ef.Repository
         public virtual async Task<ILoggerRepository> VerifyAsync()
         {
             var context = contextProvider();
-            //await context.Database.EnsureCreatedAsync();
+            Debug.Assert(context != null, "DBContext is null, please ensure ContextProvider contains a db context");
             await context.Database.MigrateAsync();
             return this;
         }

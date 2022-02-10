@@ -3,6 +3,7 @@ using System.Diagnostics;
 using yourLogs.Exceptions.Core.LogReaders;
 using yourLogs.Exceptions.Core.LogWriters.Providers;
 using yourLogs.Exceptions.Core.Models;
+using yourLogs.Exceptions.Core.Repository;
 
 namespace yourLogs.Exceptions.Core.LogWriters
 {
