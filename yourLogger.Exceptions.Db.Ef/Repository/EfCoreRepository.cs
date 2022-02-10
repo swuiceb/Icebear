@@ -12,20 +12,46 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace yourLogs.Exceptions.Db.Ef.Repository
 {
-    public sealed class EfCoreRepository : ILoggerRepository
+    public class EfCoreRepository : EfCoreRepositoryBase
+    {
+        public EfCoreRepository(Func<ErrorDbContext> contextProvider) : base(contextProvider)
+        {
+        }
+    }
+
+    public class EfCoreInMemRepository : EfCoreRepositoryBase
+    {
+        public EfCoreInMemRepository(Func<ErrorDbContext> contextProvider) : base(contextProvider)
+        {
+        }
+
+        public override Task<ILoggerRepository> VerifyAsync()
+        {
+            return VerifyForInMemAsync();
+        }
+    }
+    
+    public abstract class EfCoreRepositoryBase : ILoggerRepository
     {
         private readonly Func<ErrorDbContext> contextProvider;
 
-        public EfCoreRepository([NotNull] Func<ErrorDbContext> contextProvider)
+        public EfCoreRepositoryBase([NotNull] Func<ErrorDbContext> contextProvider)
         {
             this.contextProvider = contextProvider;
         }
 
-        public async Task<ILoggerRepository> VerifyAsync()
+        public virtual async Task<ILoggerRepository> VerifyAsync()
         {
             var context = contextProvider();
             //await context.Database.EnsureCreatedAsync();
             await context.Database.MigrateAsync();
+            return this;
+        }
+
+        protected async Task<ILoggerRepository> VerifyForInMemAsync()
+        {
+            var context = contextProvider();
+            await context.Database.EnsureCreatedAsync();
             return this;
         }
 

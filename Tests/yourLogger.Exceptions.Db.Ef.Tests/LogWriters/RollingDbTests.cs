@@ -36,7 +36,7 @@ namespace yourLogs.Exceptions.Db.Ef.Tests.LogWriters
         [Test]
         public async Task InsertError_EnsureLog()
         {
-            var repository = new EfCoreRepository(() => new ErrorDbContext(inMemoryOption));
+            var repository = new EfCoreInMemRepository(() => new ErrorDbContext(inMemoryOption));
             var handler = new RollingDbLogWriter(5,
                 repository, ExceptionTextProviders.Default,
                 codeProvider: (ex) => ex.Message);
@@ -56,7 +56,7 @@ namespace yourLogs.Exceptions.Db.Ef.Tests.LogWriters
         [Test]
         public async Task InsertWarning_AndErrors_EnsureLog()
         {
-            var repository = new EfCoreRepository(() => new ErrorDbContext(inMemoryOption));
+            var repository = new EfCoreInMemRepository(() => new ErrorDbContext(inMemoryOption));
             var handler = new RollingDbLogWriter(5,
                 repository, ExceptionTextProviders.Default,
                 codeProvider: (ex) => ex.Message);

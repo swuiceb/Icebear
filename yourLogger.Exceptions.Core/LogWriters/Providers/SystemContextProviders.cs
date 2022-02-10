@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace yourLogs.Exceptions.Core.LogWriters.Providers
 {
@@ -8,8 +9,7 @@ namespace yourLogs.Exceptions.Core.LogWriters.Providers
         public static Func<string> Default() => () =>
         {
             return $"[Machine]:{Environment.MachineName}," +
-                   $"[Thread]: {Environment.CurrentManagedThreadId}," +
-                   $"[CPU]: NOT IMPLEMENTED";
+                   $"[Thread]: {Environment.CurrentManagedThreadId}";
         };
     }
 }

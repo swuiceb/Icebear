@@ -19,7 +19,7 @@ public class DbPersistenceHandlerTests
 {
     private readonly DbContextOptions inMemoryOption;
     private readonly ErrorDbContext context;
-    private EfCoreRepository repository;
+    private EfCoreRepositoryBase repository;
 
     public DbPersistenceHandlerTests()
     {
@@ -33,7 +33,7 @@ public class DbPersistenceHandlerTests
 
         context = new ErrorDbContext(inMemoryOption);
         context.Database.EnsureCreated();
-        repository = new EfCoreRepository(() => new ErrorDbContext(inMemoryOption));
+        repository = new EfCoreInMemRepository(() => new ErrorDbContext(inMemoryOption));
     }
 
     [SetUp]
