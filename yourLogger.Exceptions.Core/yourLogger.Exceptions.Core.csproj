@@ -15,7 +15,7 @@
         <PackageTags>Exception Logging Common</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <TargetFrameworks>net5.0;net6.0;netstandard1.7;netstandard2.0;netstandard2.1</TargetFrameworks>
-        <PackageVersion>0.0.15</PackageVersion>
+        <PackageVersion>0.0.16</PackageVersion>
         <PackageProjectUrl>https://github.com/swuiceb/yourLogger/tree/main/yourLogger.Exceptions.Core</PackageProjectUrl>
         <Copyright>swu</Copyright>
         <PackageReleaseNotes>Initial ugly release,</PackageReleaseNotes>

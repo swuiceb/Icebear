@@ -24,7 +24,8 @@ namespace yourLogs.Exceptions.Db.Ef.Repository
         public async Task<ILoggerRepository> VerifyAsync()
         {
             var context = contextProvider();
-            await context.Database.EnsureCreatedAsync();
+            //await context.Database.EnsureCreatedAsync();
+            await context.Database.MigrateAsync();
             return this;
         }
 

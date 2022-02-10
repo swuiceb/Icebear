@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace yourLogs.Exceptions.Db.Ef.Models
 {
     [Index("Id", IsUnique = true, Name = "UNQ_LOG_ID")]
-    [Table("Logs")]
+    [Table("Icebear_Logs")]
     public record LogEntity : ILogEntry{
         [Key]
         [Column("Id")]

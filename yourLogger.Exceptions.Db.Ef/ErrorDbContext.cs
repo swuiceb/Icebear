@@ -16,8 +16,7 @@ namespace yourLogs.Exceptions.Db.Ef
         public DbSet<LogEntity> Logs { get; set; }
         
         public DbSet<TagEntity> Tags { get; set; }
-
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+      /*  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=localhost,1433;Database=ExceptionBear;User Id=sa;Password=Welcome1!");
         base.OnConfiguring(optionsBuilder);

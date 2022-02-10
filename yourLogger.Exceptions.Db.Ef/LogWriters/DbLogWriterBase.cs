@@ -38,6 +38,7 @@ namespace yourLogs.Exceptions.Db.Ef.LogWriters
 
         public async Task Init()
         {
+            await repository.VerifyAsync();
             tags = (await repository.GetTagsAsync())
                 .ToList()
                 .Select(t => t.Tag);
